@@ -1,5 +1,4 @@
 import Link from "next/link";
-import LoginWithSocial from "./LoginWithSocial";
 
 const FormContent = () => {
   return (

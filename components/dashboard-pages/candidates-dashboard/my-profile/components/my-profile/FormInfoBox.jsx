@@ -20,14 +20,14 @@ const FormInfoBox = () => {
       <div className="row">
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Full Name</label>
-          <input type="text" name="name" placeholder="Jerome" required />
+          <label>First Name</label>
+          <input type="text" name="name" placeholder="" required />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Job Title</label>
-          <input type="text" name="name" placeholder="UI Designer" required />
+          <label>Last name</label>
+          <input type="text" name="name" placeholder="" required />
         </div>
 
         {/* <!-- Input --> */}
@@ -36,7 +36,7 @@ const FormInfoBox = () => {
           <input
             type="text"
             name="name"
-            placeholder="0 123 456 7890"
+            placeholder=""
             required
           />
         </div>
@@ -47,108 +47,69 @@ const FormInfoBox = () => {
           <input
             type="text"
             name="name"
-            placeholder="creativelayers"
-            required
-          />
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Website</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="www.jerome.com"
+            placeholder=""
             required
           />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-3 col-md-12">
-          <label>Current Salary($)</label>
+          <label>University</label>
           <select className="chosen-single form-select" required>
-            <option>40-70 K</option>
-            <option>50-80 K</option>
-            <option>60-90 K</option>
-            <option>70-100 K</option>
-            <option>100-150 K</option>
+            <option>Jordan University of Science and Technology</option>
+            <option>Yarmouk University</option>
+            <option>Jordan University</option>
+            <option>Jadara University</option>
+            <option>Princess Sumaya University for Technology</option>
           </select>
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-3 col-md-12">
-          <label>Expected Salary($)</label>
+          <label>Major</label>
           <select className="chosen-single form-select" required>
-            <option>120-350 K</option>
-            <option>40-70 K</option>
-            <option>50-80 K</option>
-            <option>60-90 K</option>
-            <option>70-100 K</option>
-            <option>100-150 K</option>
+            <option disabled className="fw-bold" value={null}>IT</option>
+            <option>Medicine</option>
+            <option>Computer Science</option>
+            <option>Civil Engineering</option>
+            <option>Maths</option>
+            <option>Computer Engineering</option>
+            <option>Data science</option>
           </select>
         </div>
 
         {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Experience</label>
-          <input type="text" name="name" placeholder="5-10 Years" required />
-        </div>
-
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Age</label>
-          <select className="chosen-single form-select" required>
-            <option>23 - 27 Years</option>
-            <option>24 - 28 Years</option>
-            <option>25 - 29 Years</option>
-            <option>26 - 30 Years</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Education Levels</label>
-          <input type="text" name="name" placeholder="Certificate" required />
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Languages</label>
+          <label>Date of birth</label>
           <input
             type="text"
             name="name"
-            placeholder="English, Turkish"
+            placeholder="2002/14/12"
+            disabled
             required
           />
         </div>
-
-        {/* <!-- Search Select --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Categories </label>
-          <Select
-            defaultValue={[catOptions[1]]}
-            isMulti
-            name="colors"
-            options={catOptions}
-            className="basic-multi-select"
-            classNamePrefix="select"
+          <label>City</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Irbid"
+            disabled
             required
           />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Allow In Search & Listing</label>
-          <select className="chosen-single form-select" required>
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-        </div>
-
-        {/* <!-- About Company --> */}
-        <div className="form-group col-lg-12 col-md-12">
-          <label>Description</label>
-          <textarea placeholder="Spent several years working on sheep on Wall Street. Had moderate success investing in Yugo's on Wall Street. Managed a small team buying and selling Pogo sticks for farmers. Spent several years licensing licorice in West Palm Beach, FL. Developed several new methods for working it banjos in the aftermarket. Spent a weekend importing banjos in West Palm Beach, FL.In this position, the Software Engineer collaborates with Evention's Development team to continuously enhance our current software solutions as well as create new solutions to eliminate the back-office operations and management challenges present"></textarea>
+          <label>Portfolio link (optional)</label>
+          <input
+            type="text"
+            name="name"
+            placeholder=""
+            required
+          />
         </div>
 
         {/* <!-- Input --> */}

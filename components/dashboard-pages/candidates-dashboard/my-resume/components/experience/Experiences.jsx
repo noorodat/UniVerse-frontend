@@ -1,26 +1,38 @@
-const Awards = () => {
+import AddExperiencePopup from "./AddExperiencePopup";
+import EditExperiencePopup from "./EditExperiencePopup";
+const Experiences = () => {
   return (
-    <div className="resume-outer theme-yellow">
+    <div className="resume-outer theme-blue">
       <div className="upper-title">
-        <h4>Awards</h4>
-        <button className="add-info-btn">
-          <span className="icon flaticon-plus"></span> Awards
+        <h4>Work & Experience</h4>
+        <AddExperiencePopup />
+        <button className="add-info-btn" data-bs-toggle="modal"
+          data-bs-target="#AddExperienceModal">
+          <span className="icon flaticon-plus"></span> Add Work
         </button>
       </div>
       {/* <!-- Resume BLock --> */}
       <div className="resume-block">
+        <EditExperiencePopup />
         <div className="inner">
-          <span className="name">P</span>
+          <span className="name">S</span>
           <div className="title-box">
             <div className="info-box">
-              <h3>Perfect Attendance Programs</h3>
-              <span></span>
+              <h3>Product Designer</h3>
+              <span>Spotify Inc.</span>
             </div>
             <div className="edit-box">
               <span className="year">2012 - 2014</span>
               <div className="edit-btns">
                 <button>
-                  <span className="la la-pencil"></span>
+                  <a
+                    href="#"
+                    className="theme-btn call-modal"
+                    data-bs-toggle="modal"
+                    data-bs-target="#EditExperienceModal"
+                  >
+                    <span className="la la-pencil"></span>
+                  </a>
                 </button>
                 <button>
                   <span className="la la-trash"></span>
@@ -39,11 +51,11 @@ const Awards = () => {
       {/* <!-- Resume BLock --> */}
       <div className="resume-block">
         <div className="inner">
-          <span className="name">T</span>
+          <span className="name">D</span>
           <div className="title-box">
             <div className="info-box">
-              <h3>Top Performer Recognition</h3>
-              <span></span>
+              <h3>Sr UX Engineer</h3>
+              <span>Dropbox Inc.</span>
             </div>
             <div className="edit-box">
               <span className="year">2012 - 2014</span>
@@ -68,4 +80,4 @@ const Awards = () => {
   );
 };
 
-export default Awards;
+export default Experiences;
