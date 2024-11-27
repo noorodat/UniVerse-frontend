@@ -1,4 +1,4 @@
-import LoginPopup from "../../common/form/login/LoginPopup";
+import LoginPopup from "@/components/auth/login/LoginPopup";
 import Partner from "../../common/partner/Partner";
 import FooterDefault from "../../footer/common-footer";
 import DefaulHeader from "../../header/DefaulHeader";

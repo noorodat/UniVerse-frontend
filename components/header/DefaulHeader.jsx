@@ -5,9 +5,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import HeaderNavContent from "./HeaderNavContent";
 import Image from "next/image";
+import { useAuth } from "@/contexts/AuthContext";
+import JobPostLink from "./JobPostLink";
+import ProfileDropDown from "../profile/ProfileDropDown";
 
 const DefaulHeader = () => {
   const [navbar, setNavbar] = useState(false);
+  const { user } = useAuth();
+  const userType = user.user_type;
 
   const changeBackground = () => {
     if (window.scrollY >= 10) {
@@ -24,9 +29,8 @@ const DefaulHeader = () => {
   return (
     // <!-- Main Header-->
     <header
-      className={`main-header  ${
-        navbar ? "fixed-header animated slideInDown" : ""
-      }`}
+      className={`main-header  ${navbar ? "fixed-header animated slideInDown" : ""
+        }`}
     >
       {/* <!-- Main box --> */}
       <div className="main-box">
@@ -51,29 +55,19 @@ const DefaulHeader = () => {
         </div>
         {/* End .nav-outer */}
 
-        <div className="outer-box">
-          {/* <!-- Add Listing --> */}
-          <Link href="/candidates-dashboard/cv-manager" className="upload-cv">
-            Upload your CV
-          </Link>
-          {/* <!-- Login/Register --> */}
+        <ProfileDropDown />
+
+        {/* <div className="outer-box">
           <div className="btn-box">
             <a
               href="#"
-              className="theme-btn btn-style-three call-modal"
-              data-bs-toggle="modal"
-              data-bs-target="#loginPopupModal"
+              className="theme-btn btn-style-three"
             >
-              Login / Register
+              Go to Dashboard
             </a>
-            <Link
-              href="/employers-dashboard/post-jobs"
-              className="theme-btn btn-style-one"
-            >
-              Job Post
-            </Link>
+            <JobPostLink userType={userType} />
           </div>
-        </div>
+        </div> */}
       </div>
     </header>
   );

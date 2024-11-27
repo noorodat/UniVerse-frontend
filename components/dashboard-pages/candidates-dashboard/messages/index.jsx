@@ -4,7 +4,7 @@
 
 
 import MobileMenu from "../../../header/MobileMenu";
-import LoginPopup from "../../../common/form/login/LoginPopup";
+LoginPopup
 import DashboardCandidatesSidebar from "../../../header/DashboardCandidatesSidebar";
 import BreadCrumb from "../../BreadCrumb";
 import CopyrightFooter from "../../CopyrightFooter";
@@ -44,9 +44,8 @@ const Index = () => {
 
           <div className="row">
             <div
-              className={`col-lg-12 ${
-                chatSidebar ? "active-chat-contacts" : ""
-              }`}
+              className={`col-lg-12 ${chatSidebar ? "active-chat-contacts" : ""
+                }`}
             >
               <div className="chat-widget">
                 <div className="widget-content">

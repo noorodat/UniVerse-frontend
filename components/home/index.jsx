@@ -6,7 +6,6 @@ import JobFeatured3 from "../job-featured/JobFeatured3";
 import Testimonial2 from "../testimonial/Testimonial2";
 import TopCompany from "../top-company/TopCompany";
 import About2 from "../about/About2";
-import LoginPopup from "../common/form/login/LoginPopup";
 import MobileMenu from "../header/MobileMenu";
 import DefaulHeader from "../header/DefaulHeader";
 import Link from "next/link";
@@ -15,9 +14,6 @@ import Image from "next/image";
 const index = () => {
   return (
     <>
-      <LoginPopup />
-      {/* End Login Popup Modal */}
-
       <DefaulHeader />
       {/* End Header with upload cv btn */}
 
