@@ -8,14 +8,14 @@ async function httpRequest(endpoint, method, payload = null, withToken = false, 
     console.log(token)
     console.log("tokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentoken")
 
-    if (!['POST', 'DELETE', 'PUT', 'PATCH', "GET"].includes(method)) {
+    if (!['POST', 'DELETE', 'PUT', 'PATCH'].includes(method)) {
         throw new Error("Invalid HTTP method");
     }
 
     try {
         const headers = {
             "Content-Type": "application/json",
-            ...(withToken && { Authorization: `Token ${token}` }),
+            ...(withToken && { Authorization: `Bearer ${token}` }),
         };
 
         const options = {

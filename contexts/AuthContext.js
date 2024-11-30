@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
     const getUser = async () => {
         try {
-            const response = await getData(profileEndPoints.getUser, true);
+            const response = await getData(profileEndPoints.getUser);
             console.log(response)
             setUser(response.data);
         } catch (error) {

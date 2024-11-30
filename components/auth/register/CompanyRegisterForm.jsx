@@ -53,7 +53,11 @@ export default function CompanyRegisterForm() {
                 />
             </div>
             <div className="form-group">
-                <CustomFormSubmittionButton label="Register" isLoading={isSubmitting} />
+                <CustomFormSubmittionButton
+                    label="Register"
+                    isLoading={isSubmitting}
+                    className="theme-btn btn-style-one"
+                />
             </div>
         </form>
     );

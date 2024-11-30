@@ -9,4 +9,6 @@ export default {
     'checkVerification': "auth/check_verification/",
     'updateUserSession': 'auth/refresh_token/',
     'logout': 'auth/logout/',
+    'checkTokenValidation': 'auth/check_token/',
+    'refreshAccessToken': 'auth/refresh_token/',
 }

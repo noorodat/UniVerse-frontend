@@ -1,13 +1,12 @@
+'use server'
+
 import { cookies } from "next/headers";
 
-export default async function saveUserToken(tokenKey, token) {
-    'use server'
-    cookies().set({
-        name: tokenKey,
-        value: token,
+export default async function saveUserToken(tokenKey, tokenValue) {
+    cookies().set(tokenKey, tokenValue, {
         httpOnly: true,
-        // secure: process.env.NODE_ENV === 'production',
+        path: "/",
+        httpOnly: true,
         sameSite: 'strict',
-        path: '/',
-    })
+    });
 }

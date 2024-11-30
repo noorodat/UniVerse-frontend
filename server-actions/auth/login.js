@@ -21,7 +21,7 @@ export default async function login(email, password) {
             isVerified = false;
             userType = response.user_type;
         } else {
-            await saveUserToken("access_token", response.token);
+            await saveUserToken("access_token", response.access_token);
             await saveUserToken("refresh_token", response.refresh_token);
         }
     } catch (error) {

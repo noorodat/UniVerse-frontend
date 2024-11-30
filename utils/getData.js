@@ -11,9 +11,10 @@ export async function getData(endpoint, withToken = true, revalidateValue = fals
     try {
         if (withToken) {
             const token = await getUserToken();
+            console.log(token)
             if (!token) return redirect('/login')
             headers = {
-                'Authorization': `Token ${token}`,
+                'Authorization': `Bearer ${token}`,
             };
         }
 
@@ -24,6 +25,8 @@ export async function getData(endpoint, withToken = true, revalidateValue = fals
             },
             cache: `${cacheValue}`
         });
+
+        console.log(res)
 
         if (!res.ok) {
             let errorMessage = "Failed to fetch data";
