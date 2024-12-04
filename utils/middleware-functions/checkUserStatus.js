@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 export default async function (request) {
     try {
         const response = await getData(authEndpoints.checkVerification);
+
         if (!response.data) {
             return await logout();
         }

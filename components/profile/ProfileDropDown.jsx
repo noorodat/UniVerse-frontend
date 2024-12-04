@@ -1,16 +1,24 @@
 import React from 'react'
 import Image from 'next/image';
-import candidatesMenuData from '@/data/candidatesMenuData';
+import studentMenuData from '@/data/studentMenuData';
+import companyMenuData from '@/data/companyMenuData';
 import { isActiveLink } from '@/utils/linkActiveChecker';
 import { usePathname } from "next/navigation";
 import Link from 'next/link';
 import logout from '@/server-actions/auth/logout';
 import CustomServerActionButton from '../custom/buttons/CustomServerActionButton';
-import { Spinner } from "react-bootstrap";
 import CustomSpinnerLoadingButton from '../custom/loading/CustomSpinnerLoadingButton';
-
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function ProfileDropDown() {
+
+    const { user } = useAuth();
+    const userType = user.user_type;
+    const menuData = userType === 'company' ? companyMenuData : studentMenuData;
+    const userName = userType === 'company'
+        ? user.user.data.name
+        : `${user.user.data.first_name} ${user.user.data.last_name}`;
+
     return (
         <div className="dropdown dashboard-option">
             <a
@@ -26,26 +34,20 @@ export default function ProfileDropDown() {
                     width={50}
                     height={50}
                 />
-                <span className="name">My Account</span>
+                <span className="name">{userName}</span>
             </a>
 
             <ul className="dropdown-menu">
-                {candidatesMenuData.map((item) => (
+                {menuData.map((item) => (
                     <li
                         className={`${isActiveLink(
                             item.routePath,
                             usePathname()
-                        )
-                            ? "active"
-                            : ""
-                            } mb-1`}
+                        ) ? "active" : ""} mb-1`}
                         key={item.id}
                     >
                         <Link href={item.routePath}>
-                            <i
-                                className={`la ${item.icon}`}
-                            ></i>{" "}
-                            {item.name}
+                            <i className={`la ${item.icon}`}></i> {item.name}
                         </Link>
                     </li>
                 ))}
@@ -53,9 +55,7 @@ export default function ProfileDropDown() {
                     <CustomServerActionButton
                         label={
                             <>
-                                <i
-                                    className='la la-sign-out'
-                                ></i>
+                                <i className='la la-sign-out'></i>
                                 Logout
                             </>
                         }
@@ -66,5 +66,5 @@ export default function ProfileDropDown() {
                 </li>
             </ul>
         </div>
-    )
+    );
 }

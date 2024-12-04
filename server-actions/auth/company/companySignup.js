@@ -1,6 +1,6 @@
 "use server"
 import httpRequest from "@/utils/httpRequest";
-import authEndpoints from "@/constants/endpoints/auth/authEndpoints";
+import companyEndPoints from "@/constants/endpoints/company/companyEndPoints";
 
 export default async function companySignup(name, email, password) {
     const formData = {
@@ -10,7 +10,7 @@ export default async function companySignup(name, email, password) {
     };
 
     try {
-        const response = await httpRequest(authEndpoints.companySignup, "POST", formData, false, true);
+        const response = await httpRequest(companyEndPoints.companySignup, "POST", formData, false, true);
         return response;
     } catch (error) {
         throw new Error(error.message || "Signup failed");

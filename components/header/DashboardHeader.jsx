@@ -3,15 +3,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import employerMenuData from "../../data/employerMenuData";
+import studentMenuData from "@/data/studentMenuData";
+import companyMenuData from "@/data/companyMenuData";
 import HeaderNavContent from "./HeaderNavContent";
 import { isActiveLink } from "../../utils/linkActiveChecker";
+
 import { usePathname } from "next/navigation";
-
-
+import { useAuth } from "@/contexts/AuthContext";
 const DashboardHeader = () => {
     const [navbar, setNavbar] = useState(false);
-
+    const { user } = useAuth();
+    const userType = user.user_type;
+    const menuData = userType === 'company' ? companyMenuData : studentMenuData;
+    let userName = userType === 'company' ? user.user.data.name : user.user.data.first_name + ' ' + user.user.data.last_name;
 
 
     const changeBackground = () => {
@@ -29,9 +33,8 @@ const DashboardHeader = () => {
     return (
         // <!-- Main Header-->
         <header
-            className={`main-header header-shaddow  ${
-                navbar ? "fixed-header " : ""
-            }`}
+            className={`main-header header-shaddow  ${navbar ? "fixed-header " : ""
+                }`}
         >
             <div className="container-fluid">
                 {/* <!-- Main box --> */}
@@ -60,6 +63,12 @@ const DashboardHeader = () => {
 
                     <div className="outer-box">
                         <button className="menu-btn">
+                            <span className="count">1</span>
+                            <span className="icon la la-heart-o"></span>
+                        </button>
+                        {/* wishlisted menu */}
+
+                        <button className="menu-btn">
                             <span className="icon la la-bell"></span>
                         </button>
                         {/* End notification-icon */}
@@ -75,24 +84,23 @@ const DashboardHeader = () => {
                                 <Image
                                     alt="avatar"
                                     className="thumb"
-                                    src="/images/resource/company-6.png"
+                                    src="/images/resource/candidate-1.png"
                                     width={50}
                                     height={50}
                                 />
-                                <span className="name">My Account</span>
+                                <span className="name">{userName}</span>
                             </a>
 
                             <ul className="dropdown-menu">
-                                {employerMenuData.map((item) => (
+                                {menuData.map((item) => (
                                     <li
-                                        className={`${
-                                            isActiveLink(
-                                                item.routePath,
-                                                usePathname()
-                                            )
-                                                ? "active"
-                                                : ""
-                                        } mb-1`}
+                                        className={`${isActiveLink(
+                                            item.routePath,
+                                            usePathname()
+                                        )
+                                            ? "active"
+                                            : ""
+                                            } mb-1`}
                                         key={item.id}
                                     >
                                         <Link href={item.routePath}>

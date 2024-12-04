@@ -1,6 +1,6 @@
 "use server"
 import httpRequest from "@/utils/httpRequest";
-import authEndpoints from "@/constants/endpoints/auth/authEndpoints";
+import studentEndPoints from "@/constants/endpoints/student/studentEndPoints";
 import errorMessages from "@/constants/feedbackMessages/auth/errorMessages";
 
 export default async function studentSignup(firstName, lastName, email, password) {
@@ -12,7 +12,7 @@ export default async function studentSignup(firstName, lastName, email, password
     };
 
     try {
-        const response = await httpRequest(authEndpoints.studentSignup, "POST", formData, false, true);
+        const response = await httpRequest(studentEndPoints.studentSignup, "POST", formData, false, true);
         return response;
     } catch (error) {
         throw new Error(error || errorMessages.loginError);

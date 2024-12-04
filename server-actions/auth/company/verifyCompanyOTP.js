@@ -1,7 +1,8 @@
 "use server"
 import httpRequest from "@/utils/httpRequest";
-import authEndpoints from "@/constants/endpoints/auth/authEndpoints";
 import { redirect } from "next/navigation";
+import companyEndPoints from "@/constants/endpoints/company/companyEndPoints";
+
 
 export default async function verifyCompanyOTP(email, otp) {
     const formData = {
@@ -9,7 +10,7 @@ export default async function verifyCompanyOTP(email, otp) {
         otp,
     };
     try {
-        await httpRequest(authEndpoints.verifyCompany, "POST", formData, false, true);
+        await httpRequest(companyEndPoints.verifyCompany, "POST", formData, false, true);
     } catch (error) {
         throw new Error(error.message || "Verification failed");
     }

@@ -1,6 +1,6 @@
 "use server"
 import httpRequest from "@/utils/httpRequest";
-import authEndpoints from "@/constants/endpoints/auth/authEndpoints";
+import studentEndPoints from "@/constants/endpoints/student/studentEndPoints";
 import { redirect } from "next/navigation";
 
 export default async function verifyStudentOTP(email, otp) {
@@ -9,7 +9,7 @@ export default async function verifyStudentOTP(email, otp) {
         otp,
     };
     try {
-        await httpRequest(authEndpoints.verifyStudent, "POST", formData, false, true);
+        await httpRequest(studentEndPoints.verifyStudent, "POST", formData, false, true);
     } catch (error) {
         throw new Error(error.message || "Verification failed");
     }

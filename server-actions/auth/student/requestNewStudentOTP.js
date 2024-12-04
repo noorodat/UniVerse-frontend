@@ -1,6 +1,6 @@
 "use server"
 import httpRequest from "@/utils/httpRequest";
-import authEndpoints from "@/constants/endpoints/auth/authEndpoints";
+import studentEndPoints from "@/constants/endpoints/student/studentEndPoints";
 import successMessages from "@/constants/feedbackMessages/auth/successMessages";
 import errorMessages from "@/constants/feedbackMessages/auth/errorMessages";
 
@@ -10,7 +10,7 @@ export default async function requestNewStudentOTP(email) {
     };
 
     try {
-        await httpRequest(authEndpoints.requestNewStudentOTP, "POST", payload, false, true);
+        await httpRequest(studentEndPoints.requestNewStudentOTP, "POST", payload, false, true);
         return successMessages.requestNewOTP;
     } catch (error) {
         throw new Error(errorMessages.requestNewOTP);

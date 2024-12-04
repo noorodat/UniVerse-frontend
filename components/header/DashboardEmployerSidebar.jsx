@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link";
-import employerMenuData from "../../data/employerMenuData";
+import employerMenuData from "../../data/companyMenuData";
 import { isActiveLink } from "../../utils/linkActiveChecker";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -32,11 +32,10 @@ const DashboardEmployerSidebar = () => {
                 <ul className="navigation">
                     {employerMenuData.map((item) => (
                         <li
-                            className={`${
-                                isActiveLink(item.routePath, usePathname())
+                            className={`${isActiveLink(item.routePath, usePathname())
                                     ? "active"
                                     : ""
-                            } mb-1`}
+                                } mb-1`}
                             key={item.id}
                             onClick={menuToggleHandler}
                         >

@@ -1,12 +1,31 @@
-'use server'
-import { NextResponse } from "next/server";
-import checkUserStatus from "./utils/middleware-functions/checkUserStatus";
-import checkTokensExistance from "./utils/middleware-functions/checkTokensExistance";
+"use server";
 
+import { NextResponse } from "next/server";
+import checkAllValidations from "./utils/middleware-functions/checkAllValidations";
+import { getData } from "./utils/getData";
+import authEndpoints from "./constants/endpoints/auth/authEndpoints";
+
+const studentRoutes = ["student-dashboard"];
 
 export async function middleware(request) {
-    const res = await checkTokensExistance(request);
-    return res || NextResponse.next();
+    const url = request.nextUrl.pathname;
+
+    // Check if the path starts with one of the studentRoutes
+    if (studentRoutes.some(route => url.startsWith(`/${route}`))) {
+        const response = await getData(authEndpoints.checkVerification);
+        const userType = response?.data?.user_type;
+        if (userType !== "student") {
+            return NextResponse.redirect(new URL("/", request.url));
+        }
+    }
+
+    if (url.startsWith("/")) {
+        const res = await checkAllValidations(request);
+        if (res) return res;
+    }
+
+
+    return NextResponse.next();
 }
 
 export const config = {

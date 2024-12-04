@@ -1,4 +1,3 @@
-
 'use client'
 
 import Link from "next/link";
@@ -11,8 +10,6 @@ import ProfileDropDown from "../profile/ProfileDropDown";
 
 const DefaulHeader = () => {
   const [navbar, setNavbar] = useState(false);
-  const { user } = useAuth();
-  const userType = user.user_type;
 
   const changeBackground = () => {
     if (window.scrollY >= 10) {

@@ -7,5 +7,9 @@ export default z.object({
         /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.just\.edu\.jo$/,
         "Invalid email address. It must be a student email"
     ),
-    password: z.string().min(6, "Password must be at least 6 characters long"),
+    password: z
+        .string()
+        .min(6, "Password must be at least 6 characters long")
+        .regex(/[a-zA-Z]/, "Password must contain at least one alphabet")
+        .regex(/[\W_]/, "Password must contain at least one special character"),
 });

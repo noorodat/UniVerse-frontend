@@ -25,12 +25,8 @@ export default async function checkTokensExistance(request) {
             throw new Error(error.message);
         }
     }
-
-    // If both tokens are missing, redirect to login
     if (!refresh_token && !access_token) {
         return NextResponse.redirect(new URL("/login", request.url));
     }
-
-    // Continue without any action if tokens are valid
     return response;
 }
