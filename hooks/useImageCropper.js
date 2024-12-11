@@ -1,3 +1,4 @@
+"use client"
 import { useState, useRef } from "react";
 import AvatarEditor from "react-avatar-editor";
 
@@ -30,7 +31,7 @@ const useImageCropper = () => {
                 if (blob) {
                     const croppedUrl = URL.createObjectURL(blob);
                     setCroppedImg(croppedUrl);
-                    onCrop(croppedUrl); // Callback to pass cropped image to parent
+                    onCrop(croppedUrl);
                     closeCropper();
                 }
             }, "image/jpeg");

@@ -5,4 +5,5 @@ export default {
     'logout': 'auth/logout/',
     'checkTokenValidation': 'auth/check_token/',
     'refreshAccessToken': 'auth/refresh_token/',
+    'getUser': 'auth/user_data/',
 }

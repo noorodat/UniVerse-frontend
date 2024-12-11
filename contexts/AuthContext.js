@@ -2,9 +2,9 @@
 
 import { createContext, useContext, useState, useEffect, use } from "react";
 import { getData } from "@/utils/getData";
-import profileEndPoints from "@/constants/endpoints/profile/profileEndPoints";
 import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
+import authEndpoints from "@/constants/endpoints/auth/authEndpoints";
 
 const AuthContext = createContext();
 
@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
     const getUser = async () => {
         try {
-            const response = await getData(profileEndPoints.getUser);
+            const response = await getData(authEndpoints.getUser);
             console.log(response)
             setUser(response.data);
             setUserType(response.data.user_type);

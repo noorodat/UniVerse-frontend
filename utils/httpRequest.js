@@ -20,8 +20,11 @@ async function httpRequest(endpoint, method, payload = null, withToken = false, 
 
         const options = {
             method,
-            headers,
-            ...(payload && { body: JSON.stringify(payload) }),
+            headers: {
+                ...(withToken && { Authorization: `Bearer ${token}` }),
+                ...(payload instanceof FormData ? {} : { "Content-Type": "application/json" }),
+            },
+            body: payload instanceof FormData ? payload : JSON.stringify(payload),
         };
 
         const res = await fetch(`${baseURL}/${endpoint}`, options);

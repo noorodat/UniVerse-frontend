@@ -1,7 +1,7 @@
 import { getUserToken } from "./getUserToken";
 import { redirect } from "next/navigation";
 
-export async function getData(endpoint, withToken = true, revalidateValue = false, cacheValue = "default",) {
+export async function getData(endpoint, withToken = true, revalidateValue = false, cacheValue = "default", tags=[]) {
     const baseURL = process.env.NEXT_PUBLIC_BACKEND_LOCAL_BASE_URL;
 
     let data = null;
@@ -20,7 +20,8 @@ export async function getData(endpoint, withToken = true, revalidateValue = fals
         const res = await fetch(`${baseURL}/${endpoint}`, {
             headers: headers,
             next: {
-                revalidate: revalidateValue
+                revalidate: revalidateValue,
+                tags: tags
             },
             cache: `${cacheValue}`
         });

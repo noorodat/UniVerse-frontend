@@ -10,18 +10,18 @@ const studentRoutes = ["student-dashboard"];
 export async function middleware(request) {
     const url = request.nextUrl.pathname;
 
+    if (url.startsWith("/")) {
+        const res = await checkAllValidations(request);
+        if (res) return res;
+    }
+
     // Check if the path starts with one of the studentRoutes
     if (studentRoutes.some(route => url.startsWith(`/${route}`))) {
         const response = await getData(authEndpoints.checkVerification);
         const userType = response?.data?.user_type;
-        if (userType !== "student") {
+        if (userType != "student") {
             return NextResponse.redirect(new URL("/", request.url));
         }
-    }
-
-    if (url.startsWith("/")) {
-        const res = await checkAllValidations(request);
-        if (res) return res;
     }
 
 

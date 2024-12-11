@@ -7,15 +7,13 @@ import studentMenuData from "@/data/studentMenuData";
 import companyMenuData from "@/data/companyMenuData";
 import HeaderNavContent from "./HeaderNavContent";
 import { isActiveLink } from "../../utils/linkActiveChecker";
-
 import { usePathname } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
+import { useUser } from "@/contexts/UserContext";
 const DashboardHeader = () => {
     const [navbar, setNavbar] = useState(false);
-    const { user } = useAuth();
-    const userType = user.user_type;
+    const { userProfile, image, name, userType } = useUser();
+    console.log(userProfile)
     const menuData = userType === 'company' ? companyMenuData : studentMenuData;
-    let userName = userType === 'company' ? user.user.data.name : user.user.data.first_name + ' ' + user.user.data.last_name;
 
 
     const changeBackground = () => {
@@ -84,11 +82,12 @@ const DashboardHeader = () => {
                                 <Image
                                     alt="avatar"
                                     className="thumb"
-                                    src="/images/resource/candidate-1.png"
+                                    src={image}
+                                    unoptimized
                                     width={50}
                                     height={50}
                                 />
-                                <span className="name">{userName}</span>
+                                <span className="name">{name}</span>
                             </a>
 
                             <ul className="dropdown-menu">

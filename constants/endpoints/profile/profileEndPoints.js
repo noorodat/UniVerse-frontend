@@ -1,3 +1,5 @@
 export default {
-    'getUser': 'auth/user_data/',
+    'getProfile': 'auth/get_profile/',
+    'updateStudentProfile': 'api/student/update_profile/',
+    'updateImage': 'auth/update_image/',
 }

@@ -17,7 +17,7 @@ export default async function login(email, password) {
         console.log("Login response Login response Login response Login response Login response Login response")
         console.log(response)
         console.log("Login response Login response Login response Login response Login response Login response")
-        if (!response.user.data.is_verified) {
+        if (!response.is_verified) {
             isVerified = false;
             userType = response.user_type;
         } else {

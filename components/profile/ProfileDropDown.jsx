@@ -8,16 +8,12 @@ import Link from 'next/link';
 import logout from '@/server-actions/auth/logout';
 import CustomServerActionButton from '../custom/buttons/CustomServerActionButton';
 import CustomSpinnerLoadingButton from '../custom/loading/CustomSpinnerLoadingButton';
-import { useAuth } from '@/contexts/AuthContext';
+import { useUser } from '@/contexts/UserContext';
 
 export default function ProfileDropDown() {
 
-    const { user } = useAuth();
-    const userType = user.user_type;
+    const { name, image, userType } = useUser();
     const menuData = userType === 'company' ? companyMenuData : studentMenuData;
-    const userName = userType === 'company'
-        ? user.user.data.name
-        : `${user.user.data.first_name} ${user.user.data.last_name}`;
 
     return (
         <div className="dropdown dashboard-option">
@@ -30,11 +26,11 @@ export default function ProfileDropDown() {
                 <Image
                     alt="avatar"
                     className="thumb"
-                    src="/images/resource/candidate-1.png"
+                    src="/images/resource/default-user.svg"
                     width={50}
                     height={50}
                 />
-                <span className="name">{userName}</span>
+                <span className="name">{name}</span>
             </a>
 
             <ul className="dropdown-menu">
