@@ -1,6 +1,8 @@
 "use client"
 import { useState, useRef } from "react";
 import AvatarEditor from "react-avatar-editor";
+import CustomServerActionButton from "@/components/custom/buttons/CustomServerActionButton";
+import CustomSpinnerLoadingButton from "@/components/custom/loading/CustomSpinnerLoadingButton";
 
 const useImageCropper = () => {
     const [isCropModalOpen, setCropModalOpen] = useState(false);
@@ -65,12 +67,12 @@ const useImageCropper = () => {
                     >
                         Cancel
                     </button>
-                    <button
+                    <CustomServerActionButton
+                        label={'Save'}
+                        transitionFunction={() => cropImage(onCrop)}
+                        pendingMessage={<CustomSpinnerLoadingButton />}
                         className="theme-btn btn-style-one call-modal small"
-                        onClick={() => cropImage(onCrop)}
-                    >
-                        Save
-                    </button>
+                    />
                 </div>
             </div>
         );

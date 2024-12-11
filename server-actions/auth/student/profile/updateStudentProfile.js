@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 export default async function updateStudentProfile(payload) {
     try {
         await httpRequest(profileEndPoints.updateStudentProfile, "PUT", payload, true, false);
-        revalidatePath('student-dashboard/my-profile', 'page');
+        revalidatePath('student-dashboard/my-profile', 'layout');
         return successMessages.profileUpdate;
     } catch (error) {
         throw new Error(error || errorMessages.profileUpdate);

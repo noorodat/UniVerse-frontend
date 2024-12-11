@@ -1,20 +1,29 @@
-import AddAwardPopup from "./AddAwardPopup";
-import EditAwardPopup from "./EditAwardPopup";
+import ResumeSectionModal from "../ResumeSectionModal";
 
 const Awards = () => {
   return (
     <div className="resume-outer theme-yellow">
       <div className="upper-title">
         <h4>Awards</h4>
-        <AddAwardPopup />
         <button className="add-info-btn" data-bs-toggle="modal"
-          data-bs-target="#AddAwardModal">
+          data-bs-target="#addawardModal">
           <span className="icon flaticon-plus"></span> Awards
         </button>
       </div>
       {/* <!-- Resume BLock --> */}
       <div className="resume-block">
-        <EditAwardPopup />
+        <ResumeSectionModal
+          sectionType="award"
+          operation='add'
+        />
+        <ResumeSectionModal
+          sectionType="award"
+          operation='edit'
+        />
+        <ResumeSectionModal
+          sectionType="award"
+          operation='delete'
+        />
         <div className="inner">
           <span className="name">P</span>
           <div className="title-box">
@@ -30,13 +39,20 @@ const Awards = () => {
                     href="#"
                     className="theme-btn call-modal"
                     data-bs-toggle="modal"
-                    data-bs-target="#EditAwardModal"
+                    data-bs-target="#editawardModal"
                   >
                     <span className="la la-pencil"></span>
                   </a>
                 </button>
                 <button>
-                  <span className="la la-trash"></span>
+                  <a
+                    href="#"
+                    className="theme-btn call-modal"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteawardModal"
+                  >
+                    <span className="la la-trash"></span>
+                  </a>
                 </button>
               </div>
             </div>

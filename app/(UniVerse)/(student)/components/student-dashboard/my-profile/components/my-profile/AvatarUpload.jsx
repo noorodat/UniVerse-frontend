@@ -4,39 +4,25 @@ import React, { useState } from "react";
 import Image from "next/image";
 import useImageCropper from "@/hooks/useImageCropper";
 import { useUser } from "@/contexts/UserContext";
-import httpRequest from "@/utils/httpRequest";
+import updateImage from "@/server-actions/profile/updateImage";
+import { toast } from "react-toastify";
 
 const AvatarUpload = () => {
     const { openCropper, CropperComponent, isCropModalOpen, croppedImg } = useImageCropper();
-    const { image, setImage } = useUser();
+    const { image } = useUser();
     const [uploading, setUploading] = useState(false);
 
     const handleCropAndUpload = async (croppedUrl) => {
         try {
             setUploading(true);
-
-            // Convert the cropped image URL to a Blob
             const response = await fetch(croppedUrl);
             const blob = await response.blob();
-
-            // Create FormData and append the image blob
             const formData = new FormData();
-            formData.append("image", blob, "avatar.jpg"); // "avatar.jpg" is optional and can be any filename.
-
-            // Send the FormData to the backend
-            const data = await httpRequest(
-                "auth/update_image/", // Endpoint (without base URL)
-                "PUT",
-                formData,
-                true, // Include token
-                true // Return response data
-            );
-
-            // Update the user's image with the new image URL
-            const newImageUrl = data.image_url; // Ensure backend returns the updated image URL
-            setImage(newImageUrl);
+            formData.append("image", blob, "avatar.jpg");
+            const data = await updateImage(formData);
+            toast.success("Profile image updated.");
         } catch (error) {
-            console.error("Error uploading image:", error);
+            toast.error(error.message);
         } finally {
             setUploading(false);
         }

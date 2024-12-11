@@ -1,4 +1,4 @@
-const CustomFormInput = ({ label, errors, register, name, type, containerStyles = "", labelStyles = "", ...rest }) => {
+const CustomFormInput = ({ label="", errors, register, name, type, containerStyles = "", labelStyles = "", ...rest }) => {
     return (
         <>
             <label className={labelStyles}>{label}</label>

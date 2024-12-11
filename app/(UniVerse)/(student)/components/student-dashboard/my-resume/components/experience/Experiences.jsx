@@ -1,19 +1,37 @@
-import AddExperiencePopup from "./AddExperiencePopup";
-import EditExperiencePopup from "./EditExperiencePopup";
+import ResumeSectionModal from "../ResumeSectionModal";
+
 const Experiences = () => {
+
+  const handleOperation = (sectionType, operation, data) => {
+    console.log("IDDKKDKDSAKDASD");
+  };
+
   return (
     <div className="resume-outer theme-blue">
       <div className="upper-title">
         <h4>Work & Experience</h4>
-        <AddExperiencePopup />
         <button className="add-info-btn" data-bs-toggle="modal"
-          data-bs-target="#AddExperienceModal">
-          <span className="icon flaticon-plus"></span> Add Work
+          data-bs-target="#addexperienceModal">
+          <span className="icon flaticon-plus"></span> Add Experience
         </button>
       </div>
       {/* <!-- Resume BLock --> */}
       <div className="resume-block">
-        <EditExperiencePopup />
+        <ResumeSectionModal
+          sectionType="experience"
+          operation='add'
+          onSubmit={handleOperation}
+        />
+        <ResumeSectionModal
+          sectionType="experience"
+          operation='edit'
+          onSubmit={handleOperation}
+        />
+        <ResumeSectionModal
+          sectionType="experience"
+          operation='delete'
+          onSubmit={handleOperation}
+        />
         <div className="inner">
           <span className="name">S</span>
           <div className="title-box">
@@ -29,13 +47,20 @@ const Experiences = () => {
                     href="#"
                     className="theme-btn call-modal"
                     data-bs-toggle="modal"
-                    data-bs-target="#EditExperienceModal"
+                    data-bs-target="#editexperienceModal"
                   >
                     <span className="la la-pencil"></span>
                   </a>
                 </button>
                 <button>
-                  <span className="la la-trash"></span>
+                  <a
+                    href="#"
+                    className="theme-btn call-modal"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteexperienceModal"
+                  >
+                    <span className="la la-trash"></span>
+                  </a>
                 </button>
               </div>
             </div>

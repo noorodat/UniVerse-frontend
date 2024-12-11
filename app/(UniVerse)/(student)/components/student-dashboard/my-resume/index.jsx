@@ -5,8 +5,6 @@ import CopyrightFooter from "../../../../../../components/dashboard-pages/Copyri
 import Resume from "./components";
 import DashboardCandidatesHeader from "../../../../../../components/header/DashboardHeader";
 import MenuToggler from "../../../../../../components/dashboard-pages/MenuToggler";
-import EditEducationPopup from "./components/education/EditEducationPopup";
-import EditExperiencePopup from "./components/experience/EditExperiencePopup";
 
 const index = () => {
   return (
