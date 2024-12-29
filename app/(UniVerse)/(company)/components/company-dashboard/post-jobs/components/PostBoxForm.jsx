@@ -1,183 +1,174 @@
+'use client';
 
-'use client'
+import { useState } from "react";
+import CustomMultiSelectWithAddition from "@/components/custom/select/CustomMultiSelectWithAddition";
+import { useForm } from "react-hook-form";
+import jobValidations from "@/constants/validations/job/jobValidations";
+import { zodResolver } from "@hookform/resolvers/zod";
+import jobTypeData from "@/data/selectData/job/jobTypeData";
+import CustomFormTextArea from "@/components/custom/inputs/CustomFormTextArea";
+import CustomFormInput from "@/components/custom/inputs/CustomFormInput";
+import CustomAsyncSelect from "@/components/custom/select/CustomAsyncSelect";
+import CustomFormSelect from "@/components/custom/select/CustomFormSelect";
+import CustomFormSubmittionButton from "@/components/custom/buttons/CustomFormSubmittionButton";
+import { useAuth } from "@/contexts/AuthContext";
+import { postJob } from "@/server-actions/job/actions";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
-import Map from "../../../../../../../components/dashboard-pages/Map";
-import Select from "react-select";
+const PostBoxForm = ({ departments }) => {
 
-const PostBoxForm = () => {
-  const specialisms = [
-    { value: "Banking", label: "Banking" },
-    { value: "Digital & Creative", label: "Digital & Creative" },
-    { value: "Retail", label: "Retail" },
-    { value: "Human Resources", label: "Human Resources" },
-    { value: "Managemnet", label: "Managemnet" },
-    { value: "Accounting & Finance", label: "Accounting & Finance" },
-    { value: "Digital", label: "Digital" },
-    { value: "Creative Art", label: "Creative Art" },
-  ];
+  const { userId } = useAuth();
+  const router = useRouter();
+  const [tags, setTags] = useState([]);
+  const [newTag, setNewTag] = useState("");
+  const [selectedTags, setSeletedTags] = useState([]);
+
+  const [requirements, setRequirements] = useState([]);
+  const [newRequirement, setNewRequirement] = useState("");
+  const [selectedRequirements, setSelectedRequirements] = useState([]);
+
+  const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm({
+    resolver: zodResolver(jobValidations),
+  });
+
+  const onSubmit = async (data) => {
+    try {
+      console.log({
+        ...data,
+        tags: selectedTags.map((tag) => tag.value),
+        requirements: selectedRequirements.map((req) => req.value),
+        company_id: userId,
+        status: true,
+      });
+      const res = await postJob({
+        ...data,
+        tags: selectedTags.map((tag) => tag.value),
+        requirements: selectedRequirements.map((req) => req.value),
+        company_id: userId,
+        status: true,
+      });
+      toast.success(res);
+      router.push('/company-dashboard/manage-jobs');
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
 
   return (
-    <form className="default-form">
+    <form className="default-form" onSubmit={handleSubmit(onSubmit)}>
       <div className="row">
-        {/* <!-- Input --> */}
+        {/* Job Title */}
         <div className="form-group col-lg-12 col-md-12">
-          <label>Job Title</label>
-          <input type="text" name="name" placeholder="Title" />
-        </div>
-
-        {/* <!-- About Company --> */}
-        <div className="form-group col-lg-12 col-md-12">
-          <label>Job Description</label>
-          <textarea placeholder="Spent several years working on sheep on Wall Street. Had moderate success investing in Yugo's on Wall Street. Managed a small team buying and selling Pogo sticks for farmers. Spent several years licensing licorice in West Palm Beach, FL. Developed several new methods for working it banjos in the aftermarket. Spent a weekend importing banjos in West Palm Beach, FL.In this position, the Software Engineer collaborates with Evention's Development team to continuously enhance our current software solutions as well as create new solutions to eliminate the back-office operations and management challenges present"></textarea>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Email Address</label>
-          <input type="text" name="name" placeholder="" />
-        </div>
-
-        {/* <!-- Search Select --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Specialisms </label>
-          <Select
-            defaultValue={[specialisms[2]]}
-            isMulti
-            name="colors"
-            options={specialisms}
-            className="basic-multi-select"
-            classNamePrefix="select"
+          <CustomFormInput
+            label="Job Title"
+            name="title"
+            register={register}
+            errors={errors.title}
+            type={'text'}
           />
         </div>
 
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Job Type</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Offered Salary</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>$1500</option>
-            <option>$2000</option>
-            <option>$2500</option>
-            <option>$3500</option>
-            <option>$4500</option>
-            <option>$5000</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Career Level</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Experience</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Industry</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
+        {/* Job Description */}
         <div className="form-group col-lg-12 col-md-12">
-          <label>Application Deadline Date</label>
-          <input type="text" name="name" placeholder="06.04.2020" />
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Country</label>
-          <select className="chosen-single form-select">
-            <option>Australia</option>
-            <option>Pakistan</option>
-            <option>Chaina</option>
-            <option>Japan</option>
-            <option>India</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>City</label>
-          <select className="chosen-single form-select">
-            <option>Melbourne</option>
-            <option>Pakistan</option>
-            <option>Chaina</option>
-            <option>Japan</option>
-            <option>India</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-12 col-md-12">
-          <label>Complete Address</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="329 Queensberry Street, North Melbourne VIC 3051, Australia."
+          <CustomFormTextArea
+            label={"Job Description"}
+            placeholder={'Write a Job Description'}
+            name={'description'}
+            register={register}
+            errors={errors.description}
           />
         </div>
 
-        {/* <!-- Input --> */}
+        {/* Job Type */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Location link</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Ex. https://maps.app.goo.gl/itXk4jpao66KqPxbA"
-            required
+          <CustomFormSelect
+            label={"Job Type (optional)"}
+            name={'type'}
+            data={jobTypeData}
+            register={register}
+            errors={errors.type}
           />
         </div>
 
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-3 col-md-12">
-          <label>Latitude</label>
-          <input type="text" name="name" placeholder="Melbourne" />
+        {/* Salary Range */}
+        <div className="form-group col-lg-6 col-md-12">
+          <CustomFormInput
+            label="Salary Range (optional)"
+            name="salary_range"
+            register={register}
+            errors={errors.salary_range}
+            type={'text'}
+          />
         </div>
 
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-3 col-md-12">
-          <label>Longitude</label>
-          <input type="text" name="name" placeholder="Melbourne" />
+        {/* Industry */}
+        <div className="form-group col-lg-6 col-md-12">
+          <label>Department</label>
+          <CustomAsyncSelect
+            data={departments}
+            selectName={'department_id'}
+            setValue={setValue}
+            register={register}
+            errors={errors.department}
+          />
         </div>
 
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-12 col-md-12 text-right">
-          <button className="theme-btn btn-style-one">Next</button>
+        {/* Tags Select with Add Feature */}
+        <div className="form-group col-lg-12 col-md-12">
+          <label>
+            Tags{" "}
+            <small className="text-info">
+              (Makes it easy for students to reach your job post)
+            </small>
+          </label>
+          <CustomMultiSelectWithAddition
+            selectName="tags"
+            elements={tags}
+            setElements={setTags}
+            newElement={newTag}
+            setNewElement={setNewTag}
+            selectedElements={selectedTags}
+            setSeletedElements={setSeletedTags}
+            btnTheme="three"
+            register={register}
+            errors={errors.tags}
+            setValue={setValue}
+          />
+        </div>
+
+        {/* Requirements Select with Add Feature */}
+        <div className="form-group col-lg-12 col-md-12">
+          <label>
+            Requirements{" "}
+            <small className="text-info">
+              (Add your job requirements)
+            </small>
+          </label>
+          <CustomMultiSelectWithAddition
+            selectName="requirements"
+            elements={requirements}
+            setElements={setRequirements}
+            newElement={newRequirement}
+            setNewElement={setNewRequirement}
+            selectedElements={selectedRequirements}
+            setSeletedElements={setSelectedRequirements}
+            inputType="textarea"
+            btnTheme="three"
+            register={register}
+            errors={errors.requirements}
+            setValue={setValue}
+          />
+        </div>
+
+        {/* Submit Button */}
+        <div className="form-group col-lg-12 col-md-12 text-right margin-top-10">
+          <CustomFormSubmittionButton
+            label={<span>Post job <i className={`la la-send`}></i></span>}
+            isLoading={isSubmitting}
+            className="theme-btn btn-style-one w-100"
+          />
         </div>
       </div>
     </form>

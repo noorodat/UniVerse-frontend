@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import MyProfile from "@/app/(UniVerse)/(student)/components/student-dashboard/my-profile";
+import MyProfile from "@/app/(UniVerse)/(student)/student-dashboard/components/my-profile";
 
 export const metadata = {
   title: "My Profile || Superio - Job Borad React NextJS Template",

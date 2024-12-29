@@ -1,6 +1,5 @@
 import FormInfoBox from "./FormInfoBox";
-import LogoCoverUploader from "./LogoCoverUploader";
-import AvatarUpload from "@/app/(UniVerse)/(student)/components/student-dashboard/my-profile/components/my-profile/AvatarUpload";
+import AvatarUpload from "@/app/(UniVerse)/(student)/student-dashboard/components/my-profile/components/my-profile/AvatarUpload";
 
 const index = () => {
     return (

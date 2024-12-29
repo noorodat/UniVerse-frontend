@@ -1,8 +1,11 @@
+"use client"
 import Link from "next/link";
-import jobs from "../../../../../../../data/job-featured.js";
 import Image from "next/image.js";
+import DEFAULT_USER_IMAGE from "@/constants/images/defaultUserImage";
+import { formatDate } from "@/utils/format/foramtDate";
 
-const JobListingsTable = () => {
+const JobListingsTable = ({ jobs }) => {
+  
   return (
     <div className="tabs-box">
       <div className="widget-title">
@@ -25,83 +28,92 @@ const JobListingsTable = () => {
       <div className="widget-content">
         <div className="table-outer">
           <table className="default-table manage-job-table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Applications</th>
-                <th>Created & Expired</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
+            {jobs && jobs.length > 0 ? (
+              <>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Applications</th>
+                    <th>Created</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
 
-            <tbody>
-              {jobs.slice(0, 4).map((item) => (
-                <tr key={item.id}>
-                  <td>
-                    {/* <!-- Job Block --> */}
-                    <div className="job-block">
-                      <div className="inner-box">
-                        <div className="content">
-                          <span className="company-logo">
-                            <Image
-                              width={50}
-                              height={49}
-                              src={item.logo}
-                              alt="logo"
-                            />
-                          </span>
-                          <h4>
-                            <Link href={`/job-single-v3/${item.id}`}>
-                              {item.jobTitle}
-                            </Link>
-                          </h4>
-                          <ul className="job-info">
+                <tbody>
+                  {jobs.slice(0, 4).map((job) => (
+                    console.log(job.created_at),
+                    <tr key={job.id}>
+                      <td>
+                        {/* <!-- Job Block --> */}
+                        <div className="job-block">
+                          <div className="inner-box">
+                            <div className="content">
+                              <span className="company-logo">
+                                <Image
+                                  width={50}
+                                  height={49}
+                                  src={job.company.image || DEFAULT_USER_IMAGE}
+                                  alt="logo"
+                                />
+                              </span>
+                              <h4>
+                                <Link href={`/job-single/${job.id}`}>
+                                  {job.title}
+                                </Link>
+                              </h4>
+                              <ul className="job-info">
+                                <li>
+                                  <span className="icon flaticon-briefcase"></span>
+                                  {job.company.name}
+                                </li>
+                                {job.company.city && (
+                                  <li>
+                                    <span className="icon flaticon-map-locator"></span>
+                                    {job.company.city}
+                                  </li>
+                                )}
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="applied">
+                        <a href="#">3+ Applied</a>
+                      </td>
+                      <td>
+                        {formatDate(job.created_at, true)}
+                      </td>
+                      <td className={`${job.status ? "status" : "text-red"}`}>{job.status ? "Active" : "Inactive"}</td>
+                      <td>
+                        <div className="option-box">
+                          <ul className="option-list">
                             <li>
-                              <span className="icon flaticon-briefcase"></span>
-                              Atypon
+                              <button data-text="View Aplication">
+                                <span className="la la-eye"></span>
+                              </button>
                             </li>
                             <li>
-                              <span className="icon flaticon-map-locator"></span>
-                              Amman
+                              <button data-text="Reject Aplication">
+                                <span className="la la-pencil"></span>
+                              </button>
+                            </li>
+                            <li>
+                              <button data-text="Delete Aplication">
+                                <span className="la la-trash"></span>
+                              </button>
                             </li>
                           </ul>
                         </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="applied">
-                    <a href="#">3+ Applied</a>
-                  </td>
-                  <td>
-                    October 27, 2017 <br />
-                    April 25, 2011
-                  </td>
-                  <td className="status">Active</td>
-                  <td>
-                    <div className="option-box">
-                      <ul className="option-list">
-                        <li>
-                          <button data-text="View Aplication">
-                            <span className="la la-eye"></span>
-                          </button>
-                        </li>
-                        <li>
-                          <button data-text="Reject Aplication">
-                            <span className="la la-pencil"></span>
-                          </button>
-                        </li>
-                        <li>
-                          <button data-text="Delete Aplication">
-                            <span className="la la-trash"></span>
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody></>
+            ) : (
+              <div>
+                <Link href={'/company-dashboard/post-jobs'} className="theme-btn btn-style-three w-100"> Add your first job</Link>
+              </div>
+            )}
           </table>
         </div>
       </div>

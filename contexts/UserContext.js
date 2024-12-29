@@ -1,19 +1,22 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, use } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { getData } from "@/utils/getData";
 import profileEndPoints from "@/constants/endpoints/profile/profileEndPoints";
 import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 import { useAuth } from "./AuthContext";
+import { useRouter } from "next/navigation";
 
 const UserContext = createContext();
 const DEFAULT_USER_IMAGE = "/images/resource/default-user.svg";
 
 export const UserProvider = ({ children }) => {
+    const router = useRouter();
     const { userType } = useAuth();
     const [userProfile, setUserProfile] = useState(null);
     const [name, setName] = useState("");
+    const [id, setId] = useState(null);
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -21,6 +24,9 @@ export const UserProvider = ({ children }) => {
     const getUserProfile = async () => {
         try {
             const response = await getData(profileEndPoints.getProfile);
+            if (!response.data.is_verified) {
+                router.push(`verify_email?email=${response.data.email}&user_type=${userType}`);
+            }
             console.log(response)
             setUserProfile(response.data);
             if (userType == 'student') {
@@ -29,6 +35,7 @@ export const UserProvider = ({ children }) => {
                 setName(response.data.name);
             }
             setImage(response.data.image || DEFAULT_USER_IMAGE);
+            setId(response.data.id);
         } catch (error) {
             setError(error.message);
         } finally {
@@ -44,7 +51,7 @@ export const UserProvider = ({ children }) => {
     if (error) return <CustomErrorPage title={'Oops!'} description={'Something wrong happened!'} />
 
     return (
-        <UserContext.Provider value={{ userProfile, getUserProfile, name, image, userType }}>
+        <UserContext.Provider value={{ userProfile, getUserProfile, name, image, userType, id }}>
             {children}
         </UserContext.Provider>
     );

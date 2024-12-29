@@ -1,10 +1,9 @@
 import MobileMenu from "../../../../../../components/header/MobileMenu";
 import DashboardHeader from "../../../../../../components/header/DashboardHeader";
-LoginPopup
 import DashboardEmployerSidebar from "../../../../../../components/header/DashboardEmployerSidebar";
 import BreadCrumb from "../../../../../../components/dashboard-pages/BreadCrumb";
 import CopyrightFooter from "../../../../../../components/dashboard-pages/CopyrightFooter";
-import Form from "./components/Form";
+import Form from "@/app/(UniVerse)/(student)/student-dashboard/components/change-password/components/Form";
 import MenuToggler from "../../../../../../components/dashboard-pages/MenuToggler";
 
 const index = () => {
@@ -12,9 +11,6 @@ const index = () => {
     <div className="page-wrapper dashboard">
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
-
-      <LoginPopup />
-      {/* End Login Popup Modal */}
 
       <DashboardHeader />
       {/* End Header */}

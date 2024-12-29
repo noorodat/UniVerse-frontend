@@ -4,6 +4,7 @@ import authEndpoints from "@/constants/endpoints/auth/authEndpoints";
 import { NextResponse } from "next/server";
 
 export default async function (request) {
+    console.log("checkUserStatus");
     try {
         const response = await getData(authEndpoints.checkVerification);
 

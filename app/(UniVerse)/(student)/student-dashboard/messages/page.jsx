@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import Messages from "@/app/(UniVerse)/(student)/components/student-dashboard/messages";
+import Messages from "@/app/(UniVerse)/(student)/student-dashboard/components/messages";
 
 export const metadata = {
   title: "Messages || Superio - Job Borad React NextJS Template",

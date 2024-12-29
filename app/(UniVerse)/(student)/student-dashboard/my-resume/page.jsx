@@ -1,12 +1,13 @@
 import dynamic from "next/dynamic";
-import MyResume from "@/app/(UniVerse)/(student)/components/student-dashboard/my-resume";
+import MyResume from "@/app/(UniVerse)/(student)/student-dashboard/components/my-resume";
 
 export const metadata = {
   title: "My Resume || Superio - Job Borad React NextJS Template",
   description: "Superio - Job Borad React NextJS Template",
 };
 
-const index = () => {
+const index = async () => {
+
   return (
     <>
       <MyResume />

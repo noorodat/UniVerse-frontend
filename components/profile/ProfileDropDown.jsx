@@ -26,9 +26,10 @@ export default function ProfileDropDown() {
                 <Image
                     alt="avatar"
                     className="thumb"
-                    src="/images/resource/default-user.svg"
+                    src={image}
                     width={50}
                     height={50}
+                    unoptimized
                 />
                 <span className="name">{name}</span>
             </a>

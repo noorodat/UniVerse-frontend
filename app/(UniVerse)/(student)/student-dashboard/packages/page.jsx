@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import Packages from "@/app/(UniVerse)/(student)/components/student-dashboard/packages";
+import Packages from "@/app/(UniVerse)/(student)/student-dashboard/components/packages";
 
 export const metadata = {
   title: "Packages || Superio - Job Borad React NextJS Template",

@@ -7,6 +7,7 @@ import httpRequest from "../httpRequest";
 import { getRefreshToken } from "../getRefreshToken";
 
 export default async function refreshUserSession(request) {
+    console.log("refreshUserSession");
     const refresh_token = await getRefreshToken();
     const response = NextResponse.next();
     try {

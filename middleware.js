@@ -1,21 +1,17 @@
 "use server";
 
 import { NextResponse } from "next/server";
-import checkAllValidations from "./utils/middleware-functions/checkAllValidations";
 import { getData } from "./utils/getData";
 import authEndpoints from "./constants/endpoints/auth/authEndpoints";
+import refreshUserSession from "./utils/middleware-functions/refreshUserSession";
 
 const studentRoutes = ["student-dashboard"];
 
 export async function middleware(request) {
     const url = request.nextUrl.pathname;
 
-    if (url.startsWith("/")) {
-        const res = await checkAllValidations(request);
-        if (res) return res;
-    }
+    const res = await refreshUserSession(request);
 
-    // Check if the path starts with one of the studentRoutes
     if (studentRoutes.some(route => url.startsWith(`/${route}`))) {
         const response = await getData(authEndpoints.checkVerification);
         const userType = response?.data?.user_type;
@@ -25,7 +21,7 @@ export async function middleware(request) {
     }
 
 
-    return NextResponse.next();
+    return res || NextResponse.next();
 }
 
 export const config = {

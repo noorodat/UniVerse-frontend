@@ -7,6 +7,7 @@ import { NextResponse } from "next/server";
 import saveUserTokenViaCookies from "./saveUserTokenViaCookies";
 
 export default async function checkTokensExistance(request) {
+    console.log("checkTokensExistance");
     const access_token = await getUserToken();
     const refresh_token = await getRefreshToken();
 
@@ -16,7 +17,6 @@ export default async function checkTokensExistance(request) {
         try {
             const tokenResponse = await httpRequest(authEndpoints.refreshAccessToken, "POST", { refresh_token }, false, true);
 
-            // Update the response object with cookies
             await saveUserTokenViaCookies(response, "access_token", tokenResponse.access_token);
             await saveUserTokenViaCookies(response, "refresh_token", tokenResponse.refresh_token);
 

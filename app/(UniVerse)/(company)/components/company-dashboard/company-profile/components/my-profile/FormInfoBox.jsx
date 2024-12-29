@@ -1,30 +1,53 @@
 'use client';
 
-import { useAuth } from "@/contexts/AuthContext";
 import CustomFormInput from "@/components/custom/inputs/CustomFormInput";
 import CustomFormSubmittionButton from "@/components/custom/buttons/CustomFormSubmittionButton";
 import { useForm } from "react-hook-form";
 import companyProfileValidations from "@/constants/validations/company/companyProfileValidations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
+import { useUser } from "@/contexts/UserContext";
+import { getCountries } from "@/externalAPIs/RESTCountriesAPI";
+import AsyncSelect from "react-select/async";
+import updateCompanyProfile from "@/server-actions/auth/company/profile/updateCompanyProfile";
 
 const FormInfoBox = () => {
-    const { user } = useAuth();
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+    const { userProfile } = useUser();
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm({
         resolver: zodResolver(companyProfileValidations),
         defaultValues: {
-            name: user.user.data.name,
-            email: user.user.email,
+            name: userProfile.name,
+            email: userProfile.email,
+            website_url: userProfile.website_url,
+            phone: userProfile.phone,
+            country: userProfile.country,
+            city: userProfile.city,
+            address: userProfile.address,
+            industry: userProfile.industry,
         },
     });
 
-    const onSubmit = async (data) => {
+    const loadCountries = async (inputValue) => {
         try {
-            // Save form data (API call or update logic here)
-            console.log("Form submitted:", data);
-            toast.success("Profile updated successfully!");
+            const countries = await getCountries();
+            return countries
+                .filter(country =>
+                    country.name.toLowerCase().includes(inputValue.toLowerCase())
+                )
+                .map(country => ({ label: country.name, value: country.name }));
         } catch (error) {
-            toast.error("Failed to save profile.");
+            toast.error("Failed to load countries.");
+            return [];
+        }
+    };
+
+    const onSubmit = async (data) => {
+        console.log(data);
+        try {
+            const message = await updateCompanyProfile(data);
+            toast.success(message)
+        } catch (error) {
+            toast.error(error.message)
         }
     };
 
@@ -32,7 +55,7 @@ const FormInfoBox = () => {
         <div className="form-inner">
             <form onSubmit={handleSubmit(onSubmit)} className="default-form">
                 <div className="row">
-                    {/* First Name */}
+                    {/* Name */}
                     <div className="form-group col-lg-6 col-md-12">
                         <CustomFormInput
                             label="Company Name"
@@ -66,18 +89,54 @@ const FormInfoBox = () => {
                         />
                     </div>
 
-                    {/* Portfolio */}
+                    {/* Industry */}
+                    <div className="form-group col-lg-6 col-md-12">
+                        <CustomFormInput
+                            label="Industry"
+                            name="industry"
+                            register={register}
+                            errors={errors.industry}
+                            type="text"
+                        />
+                    </div>
+
+                    {/* Website URL */}
                     <div className="form-group col-lg-6 col-md-12">
                         <CustomFormInput
                             label="Website URL"
-                            name="websiteURL"
+                            name="website_url"
                             register={register}
-                            errors={errors.portfolio}
+                            errors={errors.website_url}
                             type="url"
                         />
                     </div>
 
-                    {/* LinkedIn */}
+                    {/* Country */}
+                    <div className="form-group col-lg-6 col-md-12">
+                        <label>Country</label>
+                        <AsyncSelect
+                            cacheOptions
+                            defaultOptions
+                            loadOptions={loadCountries}
+                            onChange={(selectedOption) =>
+                                setValue("country", selectedOption.value)
+                            }
+                            placeholder={userProfile.country}
+                        />
+                    </div>
+
+                    {/* City */}
+                    <div className="form-group col-lg-6 col-md-12">
+                        <CustomFormInput
+                            label="City"
+                            name="city"
+                            register={register}
+                            errors={errors.city}
+                            type="text"
+                        />
+                    </div>
+
+                    {/* Address */}
                     <div className="form-group col-lg-6 col-md-12">
                         <CustomFormInput
                             label="Address"

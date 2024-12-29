@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import JobAlerts from "@/app/(UniVerse)/(student)/components/student-dashboard/job-alerts";
+import JobAlerts from "@/app/(UniVerse)/(student)/student-dashboard/components/job-alerts";
 
 export const metadata = {
   title: "My Job Alerts || Superio - Job Borad React NextJS Template",

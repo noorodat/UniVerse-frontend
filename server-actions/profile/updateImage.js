@@ -11,7 +11,7 @@ export default async function updateImage(formData) {
             true,
             true
         );
-        revalidatePath('/student-dashboard/my-profile', 'layout');
+        revalidatePath('/student-dashboard/my-profile', 'page');
         return res.message;
     } catch (error) {
         throw new Error(error.detail);

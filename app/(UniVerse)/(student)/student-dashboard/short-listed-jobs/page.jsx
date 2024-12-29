@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import ShortListedJobs from "@/app/(UniVerse)/(student)/components/student-dashboard/short-listed-jobs";
+import ShortListedJobs from "@/app/(UniVerse)/(student)/student-dashboard/components/short-listed-jobs";
 
 export const metadata = {
   title: "Short ListedJobs || Superio - Job Borad React NextJS Template",

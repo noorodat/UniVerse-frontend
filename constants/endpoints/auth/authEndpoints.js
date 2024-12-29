@@ -6,4 +6,6 @@ export default {
     'checkTokenValidation': 'auth/check_token/',
     'refreshAccessToken': 'auth/refresh_token/',
     'getUser': 'auth/user_data/',
+    'updateEmail': 'auth/update_email/',
+    'updatePassword': 'auth/update_password/'
 }

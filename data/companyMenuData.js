@@ -48,13 +48,13 @@ module.exports = [
   //   routePath: "/employers-dashboard/packages",
   //   active: "",
   // },
-  {
-    id: 8,
-    name: "Messages",
-    icon: "la-comment-o",
-    routePath: "/company-dashboard/messages",
-    active: "",
-  },
+  // {
+  //   id: 8,
+  //   name: "Messages",
+  //   icon: "la-comment-o",
+  //   routePath: "/company-dashboard/messages",
+  //   active: "",
+  // },
   // {
   //   id: 9,
   //   name: "Resume Alerts",
@@ -62,6 +62,13 @@ module.exports = [
   //   routePath: "/employers-dashboard/resume-alerts",
   //   active: "",
   // },
+  {
+    id: 11,
+    name: "Change Email",
+    icon: "la-edit",
+    routePath: "/company-dashboard/change-email",
+    active: "",
+  },
   {
     id: 10,
     name: "Change Password",

@@ -1,4 +1,4 @@
-const CustomFormInput = ({ label="", errors, register, name, type, containerStyles = "", labelStyles = "", ...rest }) => {
+const CustomFormInput = ({ label = "", errors, register, name, type, containerStyles = "", labelStyles = "", ...rest }) => {
     return (
         <>
             <label className={labelStyles}>{label}</label>
@@ -8,7 +8,8 @@ const CustomFormInput = ({ label="", errors, register, name, type, containerStyl
                 name={name}
                 {...rest}
             />
-            {errors && <p className="text-red mt-2">{errors.message}</p>}</>
+            {errors && <p className="text-red mt-2">{errors.message}</p>}
+        </>
     );
 };
 

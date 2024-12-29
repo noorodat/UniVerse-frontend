@@ -1,33 +1,35 @@
 import dynamic from "next/dynamic";
-import jobs from "@/data/job-featured";
-import LoginPopup from "@/components/common/form/login/LoginPopup";
 import FooterDefault from "@/components/footer/common-footer";
 import DefaulHeader from "@/components/header/DefaulHeader";
 import MobileMenu from "@/components/header/MobileMenu";
-import RelatedJobs from "@/components/job-single-pages/related-jobs/RelatedJobs";
 import JobOverView from "@/components/job-single-pages/job-overview/JobOverView";
 import JobSkills from "@/components/job-single-pages/shared-components/JobSkills";
-import CompnayInfo from "@/components/job-single-pages/shared-components/CompanyInfo";
-import JobDetailsDescriptions from "@/components/job-single-pages/shared-components/JobDetailsDescriptions";
-import ApplyJobModalContent from "@/components/job-single-pages/shared-components/ApplyJobModalContent";
-import Image from "next/image";
+import JobDetailsDescriptions from "@/components/job/single-job/JobDetailsDescriptions";
+import jobEndPoints from "@/constants/endpoints/job/jobEndPoints";
+import { buildEndpoint } from "@/utils/buildEndpoint";
+import SingleJobHeader from "../components/SingleJobHeader";
+import { getData } from "@/utils/getData";
+import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
+import CompanyInfoWedgit from "@/components/job/single-job/CompanyInfoWedgit";
 
 export const metadata = {
   title: "UniVerse",
-  description: "Superio - Job Borad React NextJS Template",
+  description: "Job single here",
 };
 
-const JobSingleDynamicV1 = ({ params }) => {
-  const id = params.id;
-  const company = jobs.find((item) => item.id == id) || jobs[0];
+const SignleJob = async ({ params }) => {
+
+  const jobID = params.id;
+
+  const { data: job, error } = await getData(buildEndpoint(jobEndPoints.singleJob, { id: jobID }));
+  const { company, department } = job;
+
+  if (error) return <CustomErrorPage title={'Oops!'} description={'Something wrong happened!'} />
 
   return (
     <>
       {/* <!-- Header Span --> */}
       <span className="header-span"></span>
-
-      <LoginPopup />
-      {/* End Login Popup Modal */}
 
       <DefaulHeader />
       {/* <!--End Main Header --> */}
@@ -37,103 +39,20 @@ const JobSingleDynamicV1 = ({ params }) => {
 
       {/* <!-- Job Detail Section --> */}
       <section className="job-detail-section">
-        <div className="upper-box">
-          <div className="auto-container">
-            <div className="job-block-seven">
-              <div className="inner-box">
-                <div className="content">
-                  <span className="company-logo">
-                    <Image
-                      width={100}
-                      height={98}
-                      src={company?.logo}
-                      alt="logo"
-                    />
-                  </span>
-                  <h4>{company?.jobTitle}</h4>
-
-                  <ul className="job-info">
-                    <li>
-                      <span className="icon flaticon-briefcase"></span>
-                      {company?.company}
-                    </li>
-                    {/* compnay info */}
-                    <li>
-                      <span className="icon flaticon-map-locator"></span>
-                      {company?.location}
-                    </li>
-                    {/* location info */}
-                    <li>
-                      <span className="icon flaticon-clock-3"></span>{" "}
-                      {company?.time}
-                    </li>
-                    {/* time info */}
-                    <li>
-                      <span className="icon flaticon-money"></span>{" "}
-                      {company?.salary}
-                    </li>
-                    {/* salary info */}
-                  </ul>
-                  {/* End .job-info */}
-                </div>
-                {/* End .content */}
-
-                <div className="btn-box">
-                  <a
-                    href="#"
-                    className="theme-btn btn-style-one"
-                    data-bs-toggle="modal"
-                    data-bs-target="#applyJobModal"
-                  >
-                    Apply For Job
-                  </a>
-                  <button className="bookmark-btn">
-                    <i className="flaticon-bookmark"></i>
-                  </button>
-                </div>
-                {/* End apply for job btn */}
-
-                {/* <!-- Modal --> */}
-                <div
-                  className="modal fade"
-                  id="applyJobModal"
-                  tabIndex="-1"
-                  aria-hidden="true"
-                >
-                  <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div className="apply-modal-content modal-content">
-                      <div className="text-center">
-                        <h3 className="title">Apply for this job</h3>
-                        <button
-                          type="button"
-                          className="closed-modal"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      {/* End modal-header */}
-
-                      <ApplyJobModalContent />
-                      {/* End PrivateMessageBox */}
-                    </div>
-                    {/* End .send-private-message-wrapper */}
-                  </div>
-                </div>
-                {/* End .modal */}
-              </div>
-            </div>
-            {/* <!-- Job Block --> */}
-          </div>
-        </div>
-        {/* <!-- Upper Box --> */}
+        <SingleJobHeader
+          company={company}
+          jobData={{ title: job.title, type: job.type, salaryRange: job.salary_range, jobId: job.id }}
+          department={department.name}
+        />
+        {/* <!-- Upper Box --> */}  
 
         <div className="job-detail-outer">
           <div className="auto-container">
             <div className="row">
               <div className="content-column col-lg-8 col-md-12 col-sm-12">
-                <JobDetailsDescriptions />
+                <JobDetailsDescriptions jobData={{ description: job.description, requirements: job.requirements }} />
                 {/* End jobdetails content */}
-
+                {/* 
                 <div className="related-jobs">
                   <div className="title-box">
                     <h3>Related Jobs</h3>
@@ -141,10 +60,9 @@ const JobSingleDynamicV1 = ({ params }) => {
                       2020 jobs live - 293 added today.
                     </div>
                   </div>
-                  {/* End title box */}
 
                   <RelatedJobs />
-                </div>
+                </div> */}
                 {/* <!-- Related Jobs --> */}
               </div>
               {/* End .content-column */}
@@ -154,49 +72,17 @@ const JobSingleDynamicV1 = ({ params }) => {
                   <div className="sidebar-widget">
                     {/* <!-- Job Overview --> */}
                     <h4 className="widget-title">Job Overview</h4>
-                    <JobOverView />
+                    <JobOverView overViewData={{ title: job.title, createdAt: job.created_at, country: company.country, city: company.city, status: job.status }} />
 
                     <h4 className="widget-title mt-5">Job Skills</h4>
                     <div className="widget-content">
-                      <JobSkills />
+                      <JobSkills skills={job.tags} />
                     </div>
                     {/* <!-- Job Skills --> */}
                   </div>
                   {/* End .sidebar-widget */}
 
-                  <div className="sidebar-widget company-widget">
-                    <div className="widget-content">
-                      <div className="company-title">
-                        <div className="company-logo">
-                          <Image
-                            width={54}
-                            height={53}
-                            src={company.logo}
-                            alt="resource"
-                          />
-                        </div>
-                        <h5 className="company-name">{company.company}</h5>
-                        <a href="#" className="profile-link">
-                          View company profile
-                        </a>
-                      </div>
-                      {/* End company title */}
-
-                      <CompnayInfo />
-
-                      <div className="btn-box">
-                        <a
-                          href="#"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="theme-btn btn-style-three"
-                        >
-                          {company?.link}
-                        </a>
-                      </div>
-                      {/* End btn-box */}
-                    </div>
-                  </div>
+                  <CompanyInfoWedgit company={company} />
                   {/* End .company-widget */}
                 </aside>
                 {/* End .sidebar */}
@@ -215,6 +101,6 @@ const JobSingleDynamicV1 = ({ params }) => {
   );
 };
 
-export default dynamic(() => Promise.resolve(JobSingleDynamicV1), {
+export default dynamic(() => Promise.resolve(SignleJob), {
   ssr: false,
 });

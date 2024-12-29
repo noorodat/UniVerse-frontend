@@ -1,21 +1,27 @@
 import MobileMenu from "../../../../../../components/header/MobileMenu";
 import DashboardHeader from "../../../../../../components/header/DashboardHeader";
-LoginPopup
 import DashboardEmployerSidebar from "../../../../../../components/header/DashboardEmployerSidebar";
 import BreadCrumb from "../../../../../../components/dashboard-pages/BreadCrumb";
 import CopyrightFooter from "../../../../../../components/dashboard-pages/CopyrightFooter";
 import PostJobSteps from "./components/PostJobSteps";
 import PostBoxForm from "./components/PostBoxForm";
 import MenuToggler from "../../../../../../components/dashboard-pages/MenuToggler";
+import { getData } from "@/utils/getData";
+import departmentEndPoints from "@/constants/endpoints/department/departmentEndPoints";
+import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
+import { Suspense } from "react";
+import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
 
-const index = () => {
+const index = async () => {
+
+  const { data: departments, error } = await getData(departmentEndPoints.departments);
+  if (error) return <CustomErrorPage title={'Oops!'} description={'Something wrong happened!'} />
+
+
   return (
     <div className="page-wrapper dashboard">
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
-
-      <LoginPopup />
-      {/* End Login Popup Modal */}
 
       <DashboardHeader />
       {/* End Header */}
@@ -41,13 +47,15 @@ const index = () => {
               <div className="ls-widget">
                 <div className="tabs-box">
                   <div className="widget-title">
-                    <h4>Post Job</h4>
+                    <h4>Post a Job</h4>
                   </div>
 
                   <div className="widget-content">
-                    <PostJobSteps />
+                    {/* <PostJobSteps /> */}
                     {/* End job steps form */}
-                    <PostBoxForm />
+                    <Suspense fallback={<CustomSpinnerLoading />}>
+                      <PostBoxForm departments={departments} />
+                    </Suspense>
                     {/* End post box form */}
                   </div>
                 </div>

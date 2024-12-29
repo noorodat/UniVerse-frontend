@@ -2,11 +2,8 @@ import { getUserToken } from "./getUserToken";
 
 async function httpRequest(endpoint, method, payload = null, withToken = false, returnResponseData = false) {
     const baseURL = process.env.NEXT_PUBLIC_BACKEND_LOCAL_BASE_URL;
-
+    console.log(`${baseURL}/${endpoint}`);
     const token = withToken ? await getUserToken() : null;
-    console.log("tokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentoken")
-    console.log(token)
-    console.log("tokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentoken")
 
     if (!['POST', 'DELETE', 'PUT', 'PATCH'].includes(method)) {
         throw new Error("Invalid HTTP method");

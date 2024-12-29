@@ -1,20 +1,33 @@
+"use client"
 import MobileMenu from "../../../../../../components/header/MobileMenu";
 import DashboardHeader from "../../../../../../components/header/DashboardHeader";
-LoginPopup
 import DashboardEmployerSidebar from "../../../../../../components/header/DashboardEmployerSidebar";
 import BreadCrumb from "../../../../../../components/dashboard-pages/BreadCrumb";
 import CopyrightFooter from "../../../../../../components/dashboard-pages/CopyrightFooter";
 import JobListingsTable from "./components/JobListingsTable";
 import MenuToggler from "../../../../../../components/dashboard-pages/MenuToggler";
+import jobEndPoints from "@/constants/endpoints/job/jobEndPoints";
+import { buildEndpoint } from "@/utils/buildEndpoint";
+import useFetch from "@/hooks/useFetch";
+import { useAuth } from "@/contexts/AuthContext";
+import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
+import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 
 const index = () => {
+
+  const { userId: companyId } = useAuth();
+
+  const jobsByCompanyUrl = buildEndpoint(jobEndPoints.jobsByCompany, { company_id: companyId });
+
+  const { data: jobs, loading, error } = useFetch(jobsByCompanyUrl);
+
+  if (loading) return <CustomSpinnerLoading />
+  if (error) return <CustomErrorPage title={'Oops!'} description={'Something wrong happened!'} />
+
   return (
     <div className="page-wrapper dashboard">
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
-
-      <LoginPopup />
-      {/* End Login Popup Modal */}
 
       <DashboardHeader />
       {/* End Header */}
@@ -38,7 +51,7 @@ const index = () => {
             <div className="col-lg-12">
               {/* <!-- Ls widget --> */}
               <div className="ls-widget">
-                <JobListingsTable />
+                <JobListingsTable jobs={jobs} />
               </div>
             </div>
           </div>

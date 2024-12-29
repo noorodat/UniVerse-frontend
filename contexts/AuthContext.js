@@ -10,6 +10,8 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [userId, setUserId] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [userType, setUserType] = useState("");
@@ -20,6 +22,8 @@ export const AuthProvider = ({ children }) => {
             console.log(response)
             setUser(response.data);
             setUserType(response.data.user_type);
+            setUserId(response.data.id);
+            setEmail(response.data.email);
         } catch (error) {
             setError(error.message);
         } finally {
@@ -35,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     if (error) return <CustomErrorPage title={'Oops!'} description={'Something wrong happened!'} />
 
     return (
-        <AuthContext.Provider value={{ user, getUser, userType }}>
+        <AuthContext.Provider value={{ user, getUser, userType, userId, email }}>
             {children}
         </AuthContext.Provider>
     );
