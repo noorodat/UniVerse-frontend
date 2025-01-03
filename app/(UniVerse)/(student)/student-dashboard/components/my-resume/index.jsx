@@ -5,6 +5,8 @@ import CopyrightFooter from "../../../../../../components/dashboard-pages/Copyri
 import Resume from "./components";
 import DashboardCandidatesHeader from "../../../../../../components/header/DashboardHeader";
 import MenuToggler from "../../../../../../components/dashboard-pages/MenuToggler";
+import { Suspense } from "react";
+import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
 
 const index = () => {
 
@@ -42,7 +44,9 @@ const index = () => {
                   {/* End widget-title */}
 
                   <div className="widget-content">
-                    <Resume />
+                    <Suspense fallback={<CustomSpinnerLoading />}>
+                      <Resume />
+                    </Suspense>
                   </div>
                   {/* End widget-content */}
                 </div>

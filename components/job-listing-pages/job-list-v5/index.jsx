@@ -1,5 +1,5 @@
 import FooterDefault from "../../../components/footer/common-footer";
-import LoginPopup from "../../common/form/login/LoginPopup";
+
 import DefaulHeader from "../../header/DefaulHeader";
 import MobileMenu from "../../header/MobileMenu";
 import FilterJobBox from "./FilterJobBox";
@@ -11,7 +11,7 @@ const index = () => {
       {/* <!-- Header Span --> */}
       <span className="header-span"></span>
 
-      <LoginPopup />
+
       {/* End Login Popup Modal */}
 
       <DefaulHeader />

@@ -1,11 +1,9 @@
 
 'use client'
 
-import { useState } from "react";
 import CallToActions from "../components/CallToActions";
 import Categories from "../components/Categories";
 import DatePosted from "../components/DatePosted";
-import DestinationRangeSlider from "../components/DestinationRangeSlider";
 import ExperienceLevel from "../components/ExperienceLevel";
 import JobType from "../components/JobType";
 import LocationBox from "../components/LocationBox";
@@ -38,14 +36,11 @@ const FilterSidebar = () => {
           <div className="form-group">
             <LocationBox />
           </div>
-
-          <p>Radius around selected destination</p>
-          <DestinationRangeSlider />
         </div>
         {/* <!-- Filter Block --> */}
 
         <div className="filter-block">
-          <h4>Category</h4>
+          <h4>Department</h4>
           <div className="form-group">
             <Categories />
           </div>
@@ -57,36 +52,9 @@ const FilterSidebar = () => {
           <JobType />
         </div>
         {/* <!-- Switchbox Outer --> */}
-
-        <div className="checkbox-outer">
-          <h4>Date Posted</h4>
-          <DatePosted />
-        </div>
-        {/* <!-- Checkboxes Ouer --> */}
-
-        <div className="checkbox-outer">
-          <h4>Experience Level</h4>
-          <ExperienceLevel />
-        </div>
-        {/* <!-- Checkboxes Ouer --> */}
-
-        <div className="filter-block">
-          <h4>Salary</h4>
-
-          <SalaryRangeSlider />
-        </div>
-        {/* <!-- Filter Block --> */}
-
-        <div className="filter-block">
-          <h4>Tags</h4>
-          <Tag />
-        </div>
         {/* <!-- Filter Block --> */}
       </div>
       {/* Filter Outer */}
-
-      <CallToActions />
-      {/* <!-- End Call To Action --> */}
     </div>
   );
 };

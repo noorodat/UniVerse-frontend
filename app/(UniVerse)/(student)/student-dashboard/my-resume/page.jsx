@@ -15,4 +15,4 @@ const index = async () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(index), { ssr: false });
+export default dynamic(() => Promise.resolve(index), { ssr: true });

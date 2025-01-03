@@ -3,20 +3,10 @@ import DashboardHeader from "../../../../../../components/header/DashboardHeader
 import DashboardEmployerSidebar from "../../../../../../components/header/DashboardEmployerSidebar";
 import BreadCrumb from "../../../../../../components/dashboard-pages/BreadCrumb";
 import CopyrightFooter from "../../../../../../components/dashboard-pages/CopyrightFooter";
-import PostJobSteps from "./components/PostJobSteps";
 import PostBoxForm from "./components/PostBoxForm";
 import MenuToggler from "../../../../../../components/dashboard-pages/MenuToggler";
-import { getData } from "@/utils/getData";
-import departmentEndPoints from "@/constants/endpoints/department/departmentEndPoints";
-import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
-import { Suspense } from "react";
-import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
 
-const index = async () => {
-
-  const { data: departments, error } = await getData(departmentEndPoints.departments);
-  if (error) return <CustomErrorPage title={'Oops!'} description={'Something wrong happened!'} />
-
+const index = async ({ departments }) => {
 
   return (
     <div className="page-wrapper dashboard">
@@ -53,9 +43,7 @@ const index = async () => {
                   <div className="widget-content">
                     {/* <PostJobSteps /> */}
                     {/* End job steps form */}
-                    <Suspense fallback={<CustomSpinnerLoading />}>
-                      <PostBoxForm departments={departments} />
-                    </Suspense>
+                    <PostBoxForm departments={departments} />
                     {/* End post box form */}
                   </div>
                 </div>

@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export default z.object({
-    firstName: z.string().min(1, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
+    first_name: z.string().min(1, "First name is required"),
+    last_name: z.string().min(1, "Last name is required"),
     email: z.string().regex(
         /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.just\.edu\.jo$/,
         "Invalid email address. It must be a student email"

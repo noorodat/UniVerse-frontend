@@ -1,3 +1,4 @@
+import RenderItemConditionally from "@/components/render/RenderItemConditionally";
 import { formatDate } from "@/utils/format/foramtDate";
 
 const JobOverView = ({ overViewData }) => {
@@ -14,11 +15,14 @@ const JobOverView = ({ overViewData }) => {
           <h5>Status</h5>
           <span className={overViewData.status ? "text-success fw-bold" : "text-red fw-bold"}>{overViewData.status ? "Open" : "Closed"}</span>
         </li>
-        <li>
-          <i className="icon icon-location"></i>
-          <h5>Location:</h5>
-          <span>{overViewData.city}{", "}{overViewData.country} </span>
-        </li>
+        <RenderItemConditionally item={overViewData?.city && overViewData?.country}>
+          <li>
+            <i className="icon icon-location"></i>
+            <h5>Location:</h5>
+
+            <span>{overViewData?.city}{", "}{overViewData?.country} </span>
+          </li>
+        </RenderItemConditionally>
         <li>
           <i className="icon icon-user-2"></i>
           <h5>Job Title:</h5>

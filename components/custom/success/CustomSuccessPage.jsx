@@ -28,4 +28,4 @@ const CustomSuccessPage = ({ title, description, path, goTo }) => {
     );
 };
 
-export default dynamic(() => Promise.resolve(CustomSuccessPage), { ssr: false });
+export default dynamic(() => Promise.resolve(CustomSuccessPage), { ssr: true });

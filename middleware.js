@@ -4,10 +4,19 @@ import { NextResponse } from "next/server";
 import { getData } from "./utils/getData";
 import authEndpoints from "./constants/endpoints/auth/authEndpoints";
 import refreshUserSession from "./utils/middleware-functions/refreshUserSession";
+import { getUserToken } from "./utils/getUserToken";
+import { getRefreshToken } from "./utils/getRefreshToken";
 
 const studentRoutes = ["student-dashboard"];
 
 export async function middleware(request) {
+
+    const token = await getUserToken();
+    const refreshToken = await getRefreshToken();
+    if (!token || !refreshToken) {
+        return NextResponse.redirect(new URL("/login", request.url));
+    }
+
     const url = request.nextUrl.pathname;
 
     const res = await refreshUserSession(request);

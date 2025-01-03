@@ -1,5 +1,4 @@
 import MobileMenu from "../../../../../../components/header/MobileMenu";
-LoginPopup
 import DashboardCandidatesSidebar from "../../../../../../components/header/DashboardCandidatesSidebar";
 import BreadCrumb from "../../../../../../components/dashboard-pages/BreadCrumb";
 import CopyrightFooter from "../../../../../../components/dashboard-pages/CopyrightFooter";
@@ -13,8 +12,6 @@ const index = () => {
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
 
-      <LoginPopup />
-      {/* End Login Popup Modal */}
 
       <DashboardCandidatesHeader />
       {/* End Header */}

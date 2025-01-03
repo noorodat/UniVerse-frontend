@@ -1,6 +1,5 @@
 import MobileMenu from "../../../../../../components/header/MobileMenu";
 import DashboardHeader from "../../../../../../components/header/DashboardHeader";
-LoginPopup
 import DashboardEmployerSidebar from "../../../../../../components/header/DashboardEmployerSidebar";
 import BreadCrumb from "../../../../../../components/dashboard-pages/BreadCrumb";
 import CopyrightFooter from "../../../../../../components/dashboard-pages/CopyrightFooter";
@@ -8,14 +7,11 @@ import WidgetContentBox from "./components/WidgetContentBox";
 import WidgetTopFilterBox from "./components/WidgetTopFilterBox";
 import MenuToggler from "../../../../../../components/dashboard-pages/MenuToggler";
 
-const index = () => {
+const index = ({ allApplicants, jobTitle }) => {
   return (
     <div className="page-wrapper dashboard">
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
-
-      <LoginPopup />
-      {/* End Login Popup Modal */}
 
       <DashboardHeader />
       {/* End Header */}
@@ -41,12 +37,12 @@ const index = () => {
               <div className="ls-widget">
                 <div className="tabs-box">
                   <div className="widget-title">
-                    <h4>Applicant</h4>
+                    <h4>Applicants</h4>
                     <WidgetTopFilterBox />
                   </div>
                   {/* End top widget filter bar */}
 
-                  <WidgetContentBox />
+                  <WidgetContentBox allApplicants={allApplicants} jobTitle={jobTitle}/>
                   {/* End widget-content */}
                 </div>
               </div>

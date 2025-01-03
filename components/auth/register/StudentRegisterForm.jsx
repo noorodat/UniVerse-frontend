@@ -14,8 +14,9 @@ export default function StudentRegisterForm() {
         resolver: zodResolver(studentSignupValidation),
     });
     const onSubmit = async (data) => {
+        console.log(data);
         try {
-            await studentSignup(data.firstName, data.lastName, data.email, data.password);
+            await studentSignup(data);
             router.push(`/verify_email?email=${data.email}&user_type=${'student'}`);
         } catch (error) {
             toast.error(error.message);
@@ -27,9 +28,9 @@ export default function StudentRegisterForm() {
             <div className="form-group">
                 <CustomFormInput
                     label="First name"
-                    errors={errors.firstName}
+                    errors={errors.first_name}
                     register={register}
-                    name="firstName"
+                    name="first_name"
                     type="text"
                 />
             </div>
@@ -37,9 +38,9 @@ export default function StudentRegisterForm() {
             <div className="form-group">
                 <CustomFormInput
                     label="Last name"
-                    errors={errors.lastName}
+                    errors={errors.last_name}
                     register={register}
-                    name="lastName"
+                    name="last_name"
                     type="text"
                 />
             </div>

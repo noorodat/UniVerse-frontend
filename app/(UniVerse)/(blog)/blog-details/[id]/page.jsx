@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import LoginPopup from "@/components/common/form/login/LoginPopup";
 import FooterDefault from "@/components/footer/common-footer";
 import DefaulHeader from "@/components/header/DefaulHeader";
 import MobileMenu from "@/components/header/MobileMenu";
@@ -22,8 +21,6 @@ const BlogDetailsDynamic = ({ params }) => {
       {/* <!-- Header Span --> */}
       <span className="header-span"></span>
 
-      <LoginPopup />
-      {/* End Login Popup Modal */}
 
       <DefaulHeader />
       {/* <!--End Main Header --> */}
@@ -72,5 +69,5 @@ const BlogDetailsDynamic = ({ params }) => {
 };
 
 export default dynamic(() => Promise.resolve(BlogDetailsDynamic), {
-  ssr: false,
+  ssr: true,
 });

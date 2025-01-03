@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import HeaderNavContent from "./HeaderNavContent";
 import Image from "next/image";
-import { useAuth } from "@/contexts/AuthContext";
 import JobPostLink from "./JobPostLink";
 import ProfileDropDown from "../profile/ProfileDropDown";
 

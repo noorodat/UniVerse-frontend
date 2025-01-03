@@ -3,10 +3,12 @@ import DEFAULT_USER_IMAGE from "@/constants/images/defaultUserImage";
 import SaveJobButton from "@/components/job/shared/SaveJobButton";
 import ApplyForJobOrEditButton from "@/components/job/shared/ApplyForJobOrEditButton";
 import ApplyForJobModal from "@/components/job/shared/ApplyForJobModal";
+import { Suspense } from "react";
+import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
 
 
 export default function SingleJobHeader({ company, jobData, department }) {
-
+    console.log(jobData);
     return (
         <div className="upper-box">
             <div className="auto-container">
@@ -29,14 +31,14 @@ export default function SingleJobHeader({ company, jobData, department }) {
                                     {company.name}
                                 </li>
                                 {/* compnay info */}
-                                {company.city && company.country && (
+                                {company?.city && company?.country && (
                                     <li>
                                         <span className="icon flaticon-map-locator"></span>
                                         {company?.city} {", "} {company?.country}
                                     </li>
                                 )}
                                 {/* location info */}
-                                {jobData.salaryRange && (
+                                {jobData?.salaryRange && (
                                     <li>
                                         <span className="icon flaticon-money"></span>{" "}
                                         {jobData?.salaryRange} JOD
@@ -45,7 +47,7 @@ export default function SingleJobHeader({ company, jobData, department }) {
                                 {/* salary info */}
                             </ul>
                             {/* End .job-info */}
-                            {jobData.type && department && (
+                            {jobData?.type && department && (
                                 <ul ul class="job-other-info">
                                     <li class="time">{jobData.type}</li>
                                     <li class="privacy">{department}</li>
@@ -61,7 +63,9 @@ export default function SingleJobHeader({ company, jobData, department }) {
                         {/* End apply for job btn */}
 
                         {/* <!-- Modal --> */}
-                        <ApplyForJobModal />
+                        <Suspense fallback={<CustomSpinnerLoading />}>
+                            <ApplyForJobModal jobId={jobData.jobId} />
+                        </Suspense>
                         {/* End .modal */}
                     </div>
                 </div>

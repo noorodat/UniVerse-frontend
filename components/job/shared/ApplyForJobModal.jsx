@@ -1,7 +1,16 @@
 import React from 'react'
 import ApplyJobModalContent from './ApplyJobModalContent'
+import { getCookie } from '@/utils/getCookie'
+import { getData } from '@/utils/getData';
+import { buildEndpoint } from '@/utils/buildEndpoint';
+import cvEndPoints from '@/constants/endpoints/cv/cvEndPoints';
 
-export default function ApplyForJobModal() {
+export default async function ApplyForJobModal({ jobId }) {
+
+    const userId = await getCookie('user_id');
+    // Get the cvs for the studnet
+    const { data: CVs, error } = await getData(buildEndpoint(cvEndPoints.getStudentCVs, { id: userId }));
+
     return (
         <div
             className="modal fade"
@@ -22,7 +31,7 @@ export default function ApplyForJobModal() {
                     </div>
                     {/* End modal-header */}
 
-                    <ApplyJobModalContent />
+                    <ApplyJobModalContent CVs={CVs} error={error} jobId={jobId} />
                     {/* End PrivateMessageBox */}
                 </div>
                 {/* End .send-private-message-wrapper */}

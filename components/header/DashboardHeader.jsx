@@ -12,7 +12,6 @@ import { useUser } from "@/contexts/UserContext";
 const DashboardHeader = () => {
     const [navbar, setNavbar] = useState(false);
     const { userProfile, image, name, userType } = useUser();
-    console.log(userProfile)
     const menuData = userType === 'company' ? companyMenuData : studentMenuData;
 
 

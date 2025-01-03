@@ -6,7 +6,7 @@ import CopyrightFooter from "../../../../../../components/dashboard-pages/Copyri
 import DashboardHeader from "../../../../../../components/header/DashboardHeader";
 import MenuToggler from "../../../../../../components/dashboard-pages/MenuToggler";
 
-const index = () => {
+const index = ({ departments, universities }) => {
   return (
     <div className="page-wrapper dashboard">
       <span className="header-span"></span>
@@ -37,7 +37,7 @@ const index = () => {
                   <div className="widget-title">
                     <h4>My Profile</h4>
                   </div>
-                  <MyProfile />
+                  <MyProfile departments={departments} universities={universities} />
                 </div>
               </div>
               {/* <!-- Ls widget --> */}

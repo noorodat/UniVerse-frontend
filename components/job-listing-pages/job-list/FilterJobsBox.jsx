@@ -1,9 +1,6 @@
-
-
 'use client'
 
 import Link from "next/link";
-import jobs from "../../../data/job-featured";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCategory,
@@ -23,9 +20,10 @@ import {
   clearExperienceToggle,
   clearJobTypeToggle,
 } from "../../../features/job/jobSlice";
-import Image from "next/image";
+import UserImage from "@/components/common/UserImage";
+import OtherJobInfo from "@/components/job/shared/OtherJobInfo";
 
-const FilterJobsBox = () => {
+const FilterJobsBox = ({ jobs }) => {
   const { jobList, jobSort } = useSelector((state) => state.filter);
   const {
     keyword,
@@ -46,128 +44,121 @@ const FilterJobsBox = () => {
   // keyword filter on title
   const keywordFilter = (item) =>
     keyword !== ""
-      ? item.jobTitle.toLocaleLowerCase().includes(keyword.toLocaleLowerCase())
-      : item;
+      ? item.title.toLowerCase().includes(keyword.toLowerCase())
+      : true;
 
   // location filter
   const locationFilter = (item) =>
     location !== ""
-      ? item?.location
-          ?.toLocaleLowerCase()
-          .includes(location?.toLocaleLowerCase())
-      : item;
+      ? item.company.city.toLowerCase().includes(location.toLowerCase())
+      : true;
 
-  // location filter
-  const destinationFilter = (item) =>
-    item?.destination?.min >= destination?.min &&
-    item?.destination?.max <= destination?.max;
-
-  // category filter
+  // category filter (department)
   const categoryFilter = (item) =>
     category !== ""
-      ? item?.category?.toLocaleLowerCase() === category?.toLocaleLowerCase()
-      : item;
+      ? item.department.name.toLowerCase() === category.toLowerCase()
+      : true;
 
   // job-type filter
   const jobTypeFilter = (item) =>
-    jobType?.length !== 0 && item?.jobType !== undefined
-      ? jobType?.includes(
-          item?.jobType[0]?.type.toLocaleLowerCase().split(" ").join("-")
-        )
-      : item;
+    jobType?.length !== 0
+      ? jobType.includes(item.type.toLowerCase().split(" ").join("-"))
+      : true;
 
   // date-posted filter
-  const datePostedFilter = (item) =>
-    datePosted !== "all" && datePosted !== ""
-      ? item?.created_at
-          ?.toLocaleLowerCase()
-          .split(" ")
-          .join("-")
-          .includes(datePosted)
-      : item;
+  const datePostedFilter = (item) => {
+    if (datePosted === "" || datePosted === "all") return true;
+    
+    const postedDate = new Date(item.created_at);
+    const currentDate = new Date();
+    const hoursDiff = Math.abs(currentDate - postedDate) / 36e5; // Convert to hours
 
-  // experience level filter
-  const experienceFilter = (item) =>
-    experience?.length !== 0
-      ? experience?.includes(
-          item?.experience?.split(" ").join("-").toLocaleLowerCase()
-        )
-      : item;
+    switch (datePosted) {
+      case "last-hour":
+        return hoursDiff <= 1;
+      case "last-24-hour":
+        return hoursDiff <= 24;
+      case "last-7-days":
+        return hoursDiff <= 168;
+      case "last-14-days":
+        return hoursDiff <= 336;
+      case "last-30-days":
+        return hoursDiff <= 720;
+      default:
+        return true;
+    }
+  };
 
   // salary filter
-  const salaryFilter = (item) =>
-    item?.totalSalary?.min >= salary?.min &&
-    item?.totalSalary?.max <= salary?.max;
+  const salaryFilter = (item) => {
+    if (!item.salary_range) return true;
+    const itemSalary = parseInt(item.salary_range);
+    return itemSalary >= salary.min && itemSalary <= salary.max;
+  };
 
   // tag filter
-  const tagFilter = (item) => (tag !== "" ? item?.tag === tag : item);
+  const tagFilter = (item) =>
+    tag !== "" ? item.tags.includes(tag) : true;
 
-  // sort filter
-  const sortFilter = (a, b) =>
-    sort === "des" ? a.id > b.id && -1 : a.id < b.id && -1;
+  // Apply all filters
+  const filteredJobs = jobs
+    .filter(keywordFilter)
+    .filter(locationFilter)
+    .filter(categoryFilter)
+    .filter(jobTypeFilter)
+    .filter(datePostedFilter)
+    .filter(salaryFilter)
+    .filter(tagFilter);
 
-  let content = jobs
-    ?.filter(keywordFilter)
-    ?.filter(locationFilter)
-    ?.filter(destinationFilter)
-    ?.filter(categoryFilter)
-    ?.filter(jobTypeFilter)
-    ?.filter(datePostedFilter)
-    ?.filter(experienceFilter)
-    ?.filter(salaryFilter)
-    ?.filter(tagFilter)
-    ?.sort(sortFilter)
-    .slice(perPage.start, perPage.end !== 0 ? perPage.end : 10)
-    ?.map((item) => (
-      <div className="job-block" key={item.id}>
-        <div className="inner-box">
-          <div className="content">
-            <span className="company-logo">
-              <Image width={50} height={49} src={item.logo} alt="item brand" />
-            </span>
-            <h4>
-              <Link href={`/job-single/${item.id}`}>{item.jobTitle}</Link>
-            </h4>
+  // Sort jobs
+  if (sort === "asc") {
+    filteredJobs.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+  } else if (sort === "des") {
+    filteredJobs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  }
 
-            <ul className="job-info">
+  // Apply pagination
+  let displayedJobs = filteredJobs;
+  if (perPage.end > 0) {
+    displayedJobs = filteredJobs.slice(perPage.start, perPage.end);
+  }
+
+  let content = displayedJobs.map((job) => (
+    <div className="job-block" key={job.id}>
+      <div className="inner-box">
+        <div className="content">
+          <span className="company-logo">
+            <UserImage url={job.company.image} />
+          </span>
+          <h4>
+            <Link href={`/job-single/${job.id}`}>{job.title}</Link>
+          </h4>
+
+          <ul className="job-info">
+            <li>
+              <span className="icon flaticon-briefcase"></span>
+              {job.company.name}
+            </li>
+            <li>
+              <span className="icon flaticon-map-locator"></span>
+              {job.company.city}
+            </li>
+            {job.salary_range && (
               <li>
-                <span className="icon flaticon-briefcase"></span>
-                {item.company}
+                <span className="icon flaticon-money"></span> ${job.salary_range}
               </li>
-              {/* compnay info */}
-              <li>
-                <span className="icon flaticon-map-locator"></span>
-                {item.location}
-              </li>
-              {/* location info */}
-              <li>
-                <span className="icon flaticon-clock-3"></span> {item.time}
-              </li>
-              {/* time info */}
-              {/* <li>
-                <span className="icon flaticon-money"></span> {item.salary}
-              </li> */}
-              {/* salary info */}
-            </ul>
-            {/* End .job-info */}
+            )}
+          </ul>
 
-            <ul className="job-other-info">
-              {item?.jobType?.map((val, i) => (
-                <li key={i} className={`${val.styleClass}`}>
-                  {val.type}
-                </li>
-              ))}
-            </ul>
-            {/* End .job-other-info */}
+          <OtherJobInfo job={job} />
 
-            <button className="bookmark-btn">
-              <span className="flaticon-bookmark"></span>
-            </button>
-          </div>
+          <button className="bookmark-btn">
+            <span className="flaticon-bookmark"></span>
+          </button>
         </div>
       </div>
-      // End all jobs
-    ));
+    </div>
+  ));
 
   // sort handler
   const sortHandler = (e) => {
@@ -212,29 +203,27 @@ const FilterJobsBox = () => {
               <span className="icon icon-filter"></span> Filter
             </button>
           </div>
-          {/* Collapsible sidebar button */}
 
           <div className="text">
             Show <strong>{content?.length}</strong> jobs
           </div>
         </div>
-        {/* End show-result */}
 
         <div className="sort-by">
           {keyword !== "" ||
-          location !== "" ||
-          destination?.min !== 0 ||
-          destination?.max !== 100 ||
-          category !== "" ||
-          jobType?.length !== 0 ||
-          datePosted !== "" ||
-          experience?.length !== 0 ||
-          salary?.min !== 0 ||
-          salary?.max !== 20000 ||
-          tag !== "" ||
-          sort !== "" ||
-          perPage.start !== 0 ||
-          perPage.end !== 0 ? (
+            location !== "" ||
+            destination?.min !== 0 ||
+            destination?.max !== 100 ||
+            category !== "" ||
+            jobType?.length !== 0 ||
+            datePosted !== "" ||
+            experience?.length !== 0 ||
+            salary?.min !== 0 ||
+            salary?.max !== 20000 ||
+            tag !== "" ||
+            sort !== "" ||
+            perPage.start !== 0 ||
+            perPage.end !== 0 ? (
             <button
               onClick={clearAll}
               className="btn btn-danger text-nowrap me-2"
@@ -250,61 +239,50 @@ const FilterJobsBox = () => {
             onChange={sortHandler}
           >
             <option value="">Sort by (default)</option>
-            <option value="asc">Newest</option>
-            <option value="des">Oldest</option>
+            <option value="asc">Oldest</option>
+            <option value="des">Newest</option>
           </select>
-          {/* End select */}
 
           <select
             onChange={perPageHandler}
             className="chosen-single form-select ms-3 "
             value={JSON.stringify(perPage)}
           >
-            <option
-              value={JSON.stringify({
-                start: 0,
-                end: 0,
-              })}
-            >
-              All
-            </option>
-            <option
-              value={JSON.stringify({
-                start: 0,
-                end: 10,
-              })}
-            >
+            <option value={JSON.stringify({ start: 0, end: 0 })}>All</option>
+            <option value={JSON.stringify({ start: 0, end: 10 })}>
               10 per page
             </option>
-            <option
-              value={JSON.stringify({
-                start: 0,
-                end: 20,
-              })}
-            >
+            <option value={JSON.stringify({ start: 0, end: 20 })}>
               20 per page
             </option>
-            <option
-              value={JSON.stringify({
-                start: 0,
-                end: 30,
-              })}
-            >
+            <option value={JSON.stringify({ start: 0, end: 30 })}>
               30 per page
             </option>
           </select>
-          {/* End select */}
         </div>
       </div>
-      {/* End top filter bar box */}
+
       {content}
-      {/* <!-- List Show More --> */}
+
       <div className="ls-show-more">
-        <p>Show 36 of 497 Jobs</p>
+        <p>Show {content.length} of {filteredJobs.length} Jobs</p>
         <div className="bar">
-          <span className="bar-inner" style={{ width: "40%" }}></span>
+          <span 
+            className="bar-inner" 
+            style={{ width: `${(content.length / filteredJobs.length) * 100}%` }}
+          ></span>
         </div>
-        <button className="show-more">Show More</button>
+        {content.length < filteredJobs.length && (
+          <button 
+            className="show-more"
+            onClick={() => dispatch(addPerPage({ 
+              start: 0, 
+              end: perPage.end + 10 
+            }))}
+          >
+            Show More
+          </button>
+        )}
       </div>
     </>
   );

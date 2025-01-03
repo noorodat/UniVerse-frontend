@@ -11,17 +11,18 @@ import CustomFormInput from "@/components/custom/inputs/CustomFormInput";
 import CustomAsyncSelect from "@/components/custom/select/CustomAsyncSelect";
 import CustomFormSelect from "@/components/custom/select/CustomFormSelect";
 import CustomFormSubmittionButton from "@/components/custom/buttons/CustomFormSubmittionButton";
-import { useAuth } from "@/contexts/AuthContext";
+import { useUser } from "@/contexts/UserContext";
 import { updateJob } from "@/server-actions/job/actions";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
 const EditBoxForm = ({ job, departments }) => {
 
-  const { userId } = useAuth();
-  const router = useRouter();
+  console.log(job);
+  console.log(departments)
 
-  console.log(job)
+  const { id: userId } = useUser();
+  const router = useRouter();
 
   const tagOptions = job.tags.map((tag) => ({ value: tag, label: tag }));
   const requirementOptions = job.requirements.map((req) => ({ value: req, label: req }));
@@ -97,6 +98,8 @@ const EditBoxForm = ({ job, departments }) => {
             data={jobTypeData}
             register={register}
             errors={errors.type}
+            labelKey="option"
+            valueKey="option"
           />
         </div>
 
@@ -114,13 +117,16 @@ const EditBoxForm = ({ job, departments }) => {
         {/* Industry */}
         <div className="form-group col-lg-6 col-md-12">
           <label>Department</label>
-          <CustomAsyncSelect
+          <CustomFormSelect
+            name={"department_id"}
+            selectName={'department'}
             data={departments}
-            selectName={'department_id'}
-            setValue={setValue}
             register={register}
-            errors={errors.department}
-            defaultValue={job.department}
+            errors={errors.department_id}
+            label={"Department"}
+            valueKey={"id"}
+            labelKey={"name"}
+            defaultValue={job.department.id}
           />
         </div>
 

@@ -12,7 +12,7 @@ export async function addExperience(payload) {
         revalidatePath('student-dashboard/my-resume', 'page');
         return res.detail || successMessages.experienceAdded;
     } catch (error) {
-        throw new Error(error.detail || errorMessages.experienceAdded);
+        throw new Error(error.message || errorMessages.experienceAdded);
     }
 }
 
@@ -22,7 +22,7 @@ export async function updateExperience(payload, id) {
         revalidatePath('student-dashboard/my-resume', 'page');
         return res.detail || successMessages.experienceUpdated;
     } catch (error) {
-        throw new Error(error.detail || errorMessages.experienceUpdated);
+        throw new Error(error.message || errorMessages.experienceUpdated);
     }
 }
 

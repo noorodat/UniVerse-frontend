@@ -1,11 +1,10 @@
-"use client"
-
 import Image from "next/image";
 import CompanyInfo from "./CompanyInfo";
-import WebsiteURL from "./WebsiteURL";
+import WebsiteURL from "@/app/(UniVerse)/components/shared/WebsiteURL";
+import DEFAULT_USER_IMAGE from "@/constants/images/defaultUserImage";
+import Link from "next/link";
 
 export default function CompanyInfoWedgit({ company }) {
-    console.log(company)
     return (
         <div className="sidebar-widget company-widget">
             <div className="widget-content">
@@ -14,20 +13,22 @@ export default function CompanyInfoWedgit({ company }) {
                         <Image
                             width={54}
                             height={53}
-                            src={company.image}
+                            src={company.image || DEFAULT_USER_IMAGE}
                             alt="resource"
                             unoptimized
                         />
                     </div>
                     <h5 className="company-name">{company.name}</h5>
-                    <a href="#" className="profile-link">
+                    <Link href={`/single-company/${company.id}`} className="profile-link">
                         View company profile
-                    </a>
+                    </Link>
                 </div>
 
                 <CompanyInfo company={{ company }} />
 
-                <WebsiteURL websiteURL={company.website_url} />
+                {company.website_url && (
+                    <WebsiteURL websiteURL={company.website_url} />
+                )}
                 {/* End btn-box */}
             </div>
         </div>

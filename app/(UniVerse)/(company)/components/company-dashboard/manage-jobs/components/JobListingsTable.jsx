@@ -3,9 +3,21 @@ import Link from "next/link";
 import Image from "next/image.js";
 import DEFAULT_USER_IMAGE from "@/constants/images/defaultUserImage";
 import { formatDate } from "@/utils/format/foramtDate";
+import ResumeSectionModal from "@/app/(UniVerse)/(student)/student-dashboard/components/my-resume/components/ResumeSectionModal";
+import { deleteJob } from "@/server-actions/job/actions";
+import { toast } from "react-toastify";
 
 const JobListingsTable = ({ jobs }) => {
-  
+
+  const handleDeleteJob = async (id) => {
+    try {
+      const res = await deleteJob(id);
+      toast.success(res);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
   return (
     <div className="tabs-box">
       <div className="widget-title">
@@ -41,7 +53,7 @@ const JobListingsTable = ({ jobs }) => {
                 </thead>
 
                 <tbody>
-                  {jobs.slice(0, 4).map((job) => (
+                  {jobs.map((job, index) => (
                     console.log(job.created_at),
                     <tr key={job.id}>
                       <td>
@@ -79,7 +91,7 @@ const JobListingsTable = ({ jobs }) => {
                         </div>
                       </td>
                       <td className="applied">
-                        <a href="#">3+ Applied</a>
+                        <Link href={`/company-dashboard/all-applicants/${job.id}/${job.title}`}>Show applicants</Link>
                       </td>
                       <td>
                         {formatDate(job.created_at, true)}
@@ -89,20 +101,40 @@ const JobListingsTable = ({ jobs }) => {
                         <div className="option-box">
                           <ul className="option-list">
                             <li>
-                              <button data-text="View Aplication">
+                              <Link
+                                href={`/job-single/${job.id}`}
+                                data-text="View Job"
+                              >
                                 <span className="la la-eye"></span>
-                              </button>
+                              </Link>
                             </li>
                             <li>
-                              <button data-text="Reject Aplication">
+                              <Link
+                                href={`/company-dashboard/edit-job/${job.id}`}
+                                data-text="Edit Job"
+                              >
                                 <span className="la la-pencil"></span>
-                              </button>
+                              </Link>
                             </li>
                             <li>
-                              <button data-text="Delete Aplication">
-                                <span className="la la-trash"></span>
+                              <button data-text="Delete Job">
+                                <a
+                                  href="#"
+                                  className="theme-btn call-modal"
+                                  data-bs-toggle="modal"
+                                  data-bs-target={`#delete-${index}job-${index}Modal`}
+                                >
+                                  <span className="la la-trash"></span>
+                                </a>
                               </button>
                             </li>
+                            <ResumeSectionModal
+                              sectionType={`job`}
+                              operation={`delete`}
+                              onSubmit={handleDeleteJob}
+                              index={index}
+                              data={job}
+                            />
                           </ul>
                         </div>
                       </td>

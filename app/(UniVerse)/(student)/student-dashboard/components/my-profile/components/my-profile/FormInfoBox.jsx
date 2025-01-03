@@ -13,12 +13,12 @@ import Select from "react-select";
 import { getSkills } from "@/externalAPIs/APILayerSkills";
 import { useState } from "react";
 import AsyncSelect from 'react-select/async';
+import CustomFormSelect from "@/components/custom/select/CustomFormSelect";
 
 const FormInfoBox = ({ universities, departments }) => {
+  console.log(universities)
   const [skillsLoading, setSkillsLoading] = useState(false);
   const { userProfile } = useUser();
-  const [university, setUniversity] = useState(userProfile.university || "");
-  const [department, setDepartment] = useState(userProfile.department || "");
   const [skills, setSkills] = useState(userProfile.skills);
   const {
     register,
@@ -32,8 +32,8 @@ const FormInfoBox = ({ universities, departments }) => {
       last_name: userProfile.last_name,
       email: userProfile.email,
       phone: userProfile.phone ? "0" + userProfile.phone : null,
-      university: userProfile.university,
-      department: userProfile.department,
+      university: userProfile.university?.id || null,
+      department: userProfile.department?.id || null,
       github: userProfile.github,
       linkedin: userProfile.linkedin,
       portfolio: userProfile.portfolio,
@@ -60,12 +60,18 @@ const FormInfoBox = ({ universities, departments }) => {
 
 
   const onSubmit = async (data) => {
+    console.log({
+      ...data,
+      skills: skills,
+      university: parseInt(data.university),
+      department: parseInt(data.department),
+    })
     try {
       const payload = {
         ...data,
         skills: skills,
-        university: parseInt(university),
-        department: parseInt(department)
+        university: parseInt(data.university),
+        department: parseInt(data.department)
       };
       const message = await updateStudentProfile(payload);
       toast.success(message);
@@ -125,44 +131,32 @@ const FormInfoBox = ({ universities, departments }) => {
 
           {/* University */}
           <div className="form-group col-lg-6 col-md-12">
-            <label>University</label>
-            <select
-              className="chosen-single form-select"
-              {...register("university")}
-              defaultValue={userProfile.university || ""}
-              onChange={(e) => setUniversity(e.target.value)} // Update state on change
-            >
-              <option disabled value="">
-                Select your university
-              </option>
-              {universities?.map((university) => (
-                <option key={university.id} value={university.id}>
-                  {university.name}
-                </option>
-              ))}
-            </select>
-            {errors.university && <p className="error-text">{errors.university.message}</p>}
+            <CustomFormSelect
+              name={"university_id"}
+              selectName={'university'}
+              data={universities}
+              register={register}
+              errors={errors.university_id}
+              label={"University"}
+              valueKey={"id"}
+              labelKey={"name"}
+              defaultValue={userProfile.university?.id}
+            />
           </div>
 
           {/* Department */}
           <div className="form-group col-lg-6 col-md-12">
-            <label>Department</label>
-            <select
-              className="chosen-single form-select"
-              {...register("department")}
-              defaultValue={userProfile.department || ""}
-              onChange={(e) => setDepartment(e.target.value)} // Update state on change
-            >
-              <option disabled value="">
-                Select your department
-              </option>
-              {departments?.map((department) => (
-                <option key={department.id} value={department.id}>
-                  {department.name}
-                </option>
-              ))}
-            </select>
-            {errors.department && <p className="error-text">{errors.department.message}</p>}
+            <CustomFormSelect
+              name={"department_id"}
+              selectName={'department'}
+              data={departments}
+              register={register}
+              errors={errors.department_id}
+              label={"Department"}
+              valueKey={"id"}
+              labelKey={"name"}
+              defaultValue={userProfile.department?.id}
+            />
           </div>
 
           <div className="form-group col-lg-6 col-md-12">

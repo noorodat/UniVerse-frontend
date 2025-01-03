@@ -1,5 +1,5 @@
-import LoginPopup from "@/components/auth/login/LoginPopup";
-import Partner from "../../common/partner/Partner";
+
+import Partners from "@/app/(UniVerse)/components/home/Partners";
 import FooterDefault from "../../footer/common-footer";
 import DefaulHeader from "../../header/DefaulHeader";
 import MobileMenu from "../../header/MobileMenu";
@@ -7,7 +7,7 @@ import Funfact from "../../fun-fact-counter/Funfact";
 import ImgBox from "./ImgBox";
 import IntroDescriptions from "./IntroDescriptions";
 import CallToAction2 from "../../call-to-action/CallToAction2";
-import Testimonial2 from "../../testimonial/Testimonial2";
+import Testimonial from "@/app/(UniVerse)/components/home/Testimonial";
 import Block1 from "../../block/Block1";
 import Breadcrumb from "../../common/Breadcrumb";
 import Image from "next/image";
@@ -18,7 +18,7 @@ const index = () => {
       {/* <!-- Header Span --> */}
       <span className="header-span"></span>
 
-      <LoginPopup />
+
       {/* End Login Popup Modal */}
 
       <DefaulHeader />
@@ -82,7 +82,7 @@ const index = () => {
 
           <div className="carousel-outer" data-aos="fade-up">
             <div className="testimonial-carousel">
-              <Testimonial2 />
+              <Testimonial />
             </div>
             {/* <!-- Testimonial Carousel --> */}
           </div>
@@ -109,7 +109,7 @@ const index = () => {
         <div className="sponsors-outer" data-aos="fade">
           {/* <!--Sponsors Carousel--> */}
           <ul className="sponsors-carousel">
-            <Partner />
+            <Partners />
           </ul>
         </div>
       </section>

@@ -6,7 +6,7 @@ export const metadata = {
   title: 'Candidates List V2 || Superio - Job Borad React NextJS Template',
   description:
     'Superio - Job Borad React NextJS Template',
-  
+
 }
 
 
@@ -18,4 +18,4 @@ const index = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(index), { ssr: false });
+export default dynamic(() => Promise.resolve(index), { ssr: true });

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { addCVs } from "@/server-actions/cv/actions";
 import { toast } from "react-toastify";
 import CustomServerActionButton from "@/components/custom/buttons/CustomServerActionButton";
-import { useAuth } from "@/contexts/AuthContext";
+import { useUser } from "@/contexts/UserContext";
 import CustomSpinnerLoadingButton from "@/components/custom/loading/CustomSpinnerLoadingButton";
 
 // validation chaching
@@ -23,7 +23,7 @@ function checkFileTypes(files) {
 }
 
 const CvUploader = () => {
-    const { userId } = useAuth();
+    const { id: userId } = useUser();
     const [getManager, setManager] = useState([]);
     const [getError, setError] = useState("");
 

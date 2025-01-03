@@ -8,4 +8,6 @@ export default z.object({
     portfolio: z.string().nullable(),
     linkedin: z.string().nullable(),
     github: z.string().nullable(),
+    department_id: z.string().nullable(),
+    university_id: z.string().nullable(),
 });

@@ -1,3 +1,5 @@
+"use server"
+
 import { getUserToken } from "./getUserToken";
 
 async function httpRequest(endpoint, method, payload = null, withToken = false, returnResponseData = false) {
@@ -23,6 +25,10 @@ async function httpRequest(endpoint, method, payload = null, withToken = false, 
             },
             body: payload instanceof FormData ? payload : JSON.stringify(payload),
         };
+
+        console.log("payloadpayloadpayloadpayloadpayloadpayloadpayloadpayload")
+        console.log(payload)
+        console.log("payloadpayloadpayloadpayloadpayloadpayloadpayloadpayload")
 
         const res = await fetch(`${baseURL}/${endpoint}`, options);
 

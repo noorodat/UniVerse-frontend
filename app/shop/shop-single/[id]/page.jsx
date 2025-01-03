@@ -15,5 +15,5 @@ const ShopSingleDyanmic = ({ params }) => {
 };
 
 export default dynamic(() => Promise.resolve(ShopSingleDyanmic), {
-  ssr: false,
+  ssr: true,
 });

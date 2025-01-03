@@ -1,18 +1,17 @@
 import FooterDefault from "../../footer/common-footer";
 import Breadcrumb from "../../common/Breadcrumb";
-import LoginPopup from "@/components/auth/login/LoginPopup";
 import DefaulHeader from "../../header/DefaulHeader";
 import MobileMenu from "../../header/MobileMenu";
 import FilterJobsBox from "./FilterJobsBox";
 import FilterSidebar from "./FilterSidebar";
 
-const index = () => {
+const index = ({ jobs }) => {
     return (
         <>
             {/* <!-- Header Span --> */}
             <span className="header-span"></span>
 
-            <LoginPopup />
+
             {/* End Login Popup Modal */}
 
             <DefaulHeader />
@@ -46,7 +45,7 @@ const index = () => {
 
                         <div className="content-column col-lg-8 col-md-12 col-sm-12">
                             <div className="ls-outer">
-                                <FilterJobsBox />
+                                <FilterJobsBox jobs={jobs} />
                                 {/* <!-- ls Switcher --> */}
                             </div>
                         </div>

@@ -9,13 +9,13 @@ import MenuToggler from "../../../../../../components/dashboard-pages/MenuToggle
 import jobEndPoints from "@/constants/endpoints/job/jobEndPoints";
 import { buildEndpoint } from "@/utils/buildEndpoint";
 import useFetch from "@/hooks/useFetch";
-import { useAuth } from "@/contexts/AuthContext";
+import { useUser } from "@/contexts/UserContext";
 import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 
 const index = () => {
 
-  const { userId: companyId } = useAuth();
+  const { id: companyId } = useUser();
 
   const jobsByCompanyUrl = buildEndpoint(jobEndPoints.jobsByCompany, { company_id: companyId });
 

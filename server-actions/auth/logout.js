@@ -3,7 +3,7 @@ import httpRequest from "@/utils/httpRequest";
 import authEndpoints from "@/constants/endpoints/auth/authEndpoints";
 import errorMessages from "@/constants/feedbackMessages/auth/errorMessages";
 import { redirect } from "next/navigation";
-import removeUserTokens from "./removeUserTokens";
+import removeCookie from "@/utils/removeCookie";
 import { getUserToken } from "@/utils/getUserToken";
 
 export default async function logout() {
@@ -13,8 +13,9 @@ export default async function logout() {
             refresh_token: refreshToken
         }
         await httpRequest(authEndpoints.logout, "POST", payload, true, false);
-        await removeUserTokens('access_token');
-        await removeUserTokens('refresh_token');
+        await removeCookie('access_token');
+        await removeCookie('refresh_token');
+        await removeCookie('user_id');
     } catch (error) {
         throw new Error(error.message || errorMessages.logoutError);
     }

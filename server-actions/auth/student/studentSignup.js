@@ -3,18 +3,11 @@ import httpRequest from "@/utils/httpRequest";
 import studentEndPoints from "@/constants/endpoints/student/studentEndPoints";
 import errorMessages from "@/constants/feedbackMessages/auth/errorMessages";
 
-export default async function studentSignup(firstName, lastName, email, password) {
-    const formData = {
-        first_name: firstName,
-        last_name: lastName,
-        email,
-        password,
-    };
-
+export default async function studentSignup(payload) {
     try {
-        const response = await httpRequest(studentEndPoints.studentSignup, "POST", formData, false, true);
+        const response = await httpRequest(studentEndPoints.studentSignup, "POST", payload, false, true);
         return response;
     } catch (error) {
-        throw new Error(error || errorMessages.loginError);
+        throw new Error(error || errorMessages.signupError);
     }
 }

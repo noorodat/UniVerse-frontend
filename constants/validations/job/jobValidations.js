@@ -8,7 +8,7 @@ export default z.object({
     tags: z
         .array(z.string())
         .min(1, "At least one tag is required"),
-    department_id: z.number("Department is required"),
+    department_id: z.string("Department is required"),
     requirements: z
         .array(z.string())
         .min(1, "At least one requirement is required"),

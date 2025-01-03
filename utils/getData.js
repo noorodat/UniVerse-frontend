@@ -1,9 +1,10 @@
+"use server"
+
 import { getUserToken } from "./getUserToken";
 import { redirect } from "next/navigation";
 
-export async function getData(endpoint, withToken = true, revalidateValue = false, cacheValue = "default", tags=[]) {
+export async function getData(endpoint, withToken = true, revalidateValue = false, cacheValue = "default", tags = []) {
     const baseURL = process.env.NEXT_PUBLIC_BACKEND_LOCAL_BASE_URL;
-
     let data = null;
     let error = null;
     let headers = {};

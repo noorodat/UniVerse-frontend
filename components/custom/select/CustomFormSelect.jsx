@@ -1,6 +1,16 @@
-import React from 'react'
+import React from 'react';
 
-export default function CustomFormSelect({ label, name, data, register, errors, ...rest }) {
+export default function CustomFormSelect({
+    label,
+    name,
+    selectName,
+    data,
+    register,
+    errors,
+    valueKey = "id",
+    labelKey = "option",
+    ...rest
+}) {
     return (
         <>
             <label>{label}</label>
@@ -11,13 +21,13 @@ export default function CustomFormSelect({ label, name, data, register, errors, 
                 {...(register ? register(name) : {})}
                 {...rest}
             >
-                <option value="">Select a {name}</option>
-                {data.map((ele) => (
-                    <option key={ele.id} value={ele.option}>
-                        {ele.option}
+                <option value="">Select a {selectName}</option>
+                {data?.map((ele) => (
+                    <option key={ele[valueKey]} value={ele[valueKey]}>
+                        {ele[labelKey]}
                     </option>
                 ))}
             </select>
         </>
-    )
+    );
 }

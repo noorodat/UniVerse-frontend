@@ -4,17 +4,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomFormSubmittionButton from "@/components/custom/buttons/CustomFormSubmittionButton";
 import CustomFormInput from "@/components/custom/inputs/CustomFormInput";
-import { useAuth } from "@/contexts/AuthContext";
+import { useUser } from "@/contexts/UserContext";
 import { toast } from "react-toastify";
 
 const ResumeSectionModal = ({ sectionType, operation, onSubmit, index, data }) => {
     const operations = ["add", "edit", "delete"];
-    const sectionTypes = ["education", "award", "experience", "CV"];
+    const sectionTypes = ["education", "award", "experience", "CV", "job"];
     if (!operations.includes(operation) || !sectionTypes.includes(sectionType)) {
         toast.error("Invalid operation or section type");
         return null;
     }
-    const { userId: student } = useAuth();
+    const { id: student } = useUser();
     const {
         register,
         handleSubmit,

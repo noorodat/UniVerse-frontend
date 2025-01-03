@@ -1,5 +1,7 @@
 import Wrapper from "@/layout/Wrapper";
-import Home from "@/components/home";
+import Home from "@/app/(UniVerse)/components/home";
+import { Suspense } from "react";
+import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
 
 export const metadata = {
   title: "UniVerse",
@@ -9,7 +11,9 @@ export const metadata = {
 export default function page() {
   return (
     <Wrapper>
-      <Home />
+      <Suspense fallback={<CustomSpinnerLoading />}>
+        <Home />
+      </Suspense>
     </Wrapper>
   );
 }

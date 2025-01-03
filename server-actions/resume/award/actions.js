@@ -12,7 +12,7 @@ export async function addAward(payload) {
         revalidatePath('student-dashboard/my-resume', 'page');
         return res.detail || successMessages.awardAdded;
     } catch (error) {
-        throw new Error(error.detail || errorMessages.awardAdded);
+        throw new Error(error.message || errorMessages.awardAdded);
     }
 }
 
@@ -22,7 +22,7 @@ export async function updateAward(payload, id) {
         revalidatePath('student-dashboard/my-resume', 'page');
         return res.detail || successMessages.awardUpdated;
     } catch (error) {
-        throw new Error(error.detail || errorMessages.awardUpdated);
+        throw new Error(error.message || errorMessages.awardUpdated);
     }
 }
 

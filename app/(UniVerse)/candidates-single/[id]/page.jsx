@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import candidates from "@/data/candidates";
 import candidateResume from "@/data/candidateResume";
-import LoginPopup from "@/components/common/form/login/LoginPopup";
 import FooterDefault from "@/components/footer/common-footer";
 import DefaulHeader from "@/components/header/DefaulHeader";
 import MobileMenu from "@/components/header/MobileMenu";
@@ -27,8 +26,6 @@ const CandidateSingleDynamicV3 = ({ params }) => {
       {/* <!-- Header Span --> */}
       <span className="header-span"></span>
 
-      <LoginPopup />
-      {/* End Login Popup Modal */}
 
       <DefaulHeader />
       {/* <!--End Main Header --> */}
@@ -268,5 +265,5 @@ const CandidateSingleDynamicV3 = ({ params }) => {
 };
 
 export default dynamic(() => Promise.resolve(CandidateSingleDynamicV3), {
-  ssr: false,
+  ssr: true,
 });

@@ -41,10 +41,10 @@ const SignleJob = async ({ params }) => {
       <section className="job-detail-section">
         <SingleJobHeader
           company={company}
-          jobData={{ title: job.title, type: job.type, salaryRange: job.salary_range, jobId: job.id }}
+          jobData={{ title: job.title, type: job.type, salaryRange: job.salary_range, jobId: job.id, status: job.status }}
           department={department.name}
         />
-        {/* <!-- Upper Box --> */}  
+        {/* <!-- Upper Box --> */}
 
         <div className="job-detail-outer">
           <div className="auto-container">
@@ -102,5 +102,5 @@ const SignleJob = async ({ params }) => {
 };
 
 export default dynamic(() => Promise.resolve(SignleJob), {
-  ssr: false,
+  ssr: true,
 });

@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import shopItems from "@/data/shopItems";
 import Breadcrumb from "@/components/shop/Breadcrumb";
-import LoginPopup from "@/components/common/form/login/LoginPopup";
+
 
 import MobileMenu from "@/components/header/MobileMenu";
 import FooterDefault from "@/components/footer/common-footer";
@@ -27,7 +27,7 @@ const ShopSingleDyanmic = ({ id }) => {
     if (!id) <h1>Loading...</h1>;
     else setProducts(shopItems.find((item) => item.id == id) || shopItems[0]);
 
-    return () => {};
+    return () => { };
   }, [id]);
 
   // add to cart
@@ -46,7 +46,7 @@ const ShopSingleDyanmic = ({ id }) => {
 
       {/* <!-- Header Span --> */}
 
-      <LoginPopup />
+
       {/* End Login Popup Modal */}
 
       <ShopHeader />
@@ -184,5 +184,5 @@ const ShopSingleDyanmic = ({ id }) => {
 };
 
 export default dynamic(() => Promise.resolve(ShopSingleDyanmic), {
-  ssr: false,
+  ssr: true,
 });

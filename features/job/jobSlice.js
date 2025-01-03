@@ -27,8 +27,8 @@ const initialState = {
     jobTypeList: [
         {
             id: 1,
-            name: "Freelancer",
-            value: "freelancer",
+            name: "Internship",
+            value: "internship",
             isChecked: false,
         },
         {
@@ -41,12 +41,6 @@ const initialState = {
             id: 3,
             name: "Part Time",
             value: "part-time",
-            isChecked: false,
-        },
-        {
-            id: 4,
-            name: "Temporary",
-            value: "temporary",
             isChecked: false,
         },
     ],

@@ -28,4 +28,4 @@ const CustomErrorPage = ({ title, description }) => {
     );
 };
 
-export default dynamic(() => Promise.resolve(CustomErrorPage), { ssr: false });
+export default dynamic(() => Promise.resolve(CustomErrorPage), { ssr: true });

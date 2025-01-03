@@ -9,8 +9,10 @@ export default function ApplyForJobOrEditButton({ companyID = null, status, jobI
 
   const { userType } = useAuth();
   const { id } = useUser();
+  console.log(userType)
+  console.log(status)
 
-  if (id == companyID) {
+  if (id == companyID && userType === "company") {
     return (
       <Link
         href={`/company-dashboard/edit-job/${jobId}`}

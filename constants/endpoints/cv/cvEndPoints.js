@@ -1,3 +1,4 @@
 export default {
-    'CVs': 'api/resumes/',
+    CVs: 'api/resumes/',
+    getStudentCVs: 'api/students/{id}/resumes/',
 }
