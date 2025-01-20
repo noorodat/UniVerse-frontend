@@ -5,7 +5,10 @@ import MobileMenu from "../../header/MobileMenu";
 import FilterJobsBox from "./FilterJobsBox";
 import FilterSidebar from "./FilterSidebar";
 
-const index = ({ jobs }) => {
+const index = ({ jobs, departments }) => {
+
+    console.log(jobs);
+
     return (
         <>
             {/* <!-- Header Span --> */}
@@ -33,13 +36,13 @@ const index = ({ jobs }) => {
                             aria-labelledby="offcanvasLabel"
                         >
                             <div className="filters-column hide-left">
-                                <FilterSidebar />
+                                <FilterSidebar departments={departments} />
                             </div>
                         </div>
                         {/* End filter column for tablet and mobile devices */}
 
                         <div className="filters-column hidden-1023 col-lg-4 col-md-12 col-sm-12">
-                            <FilterSidebar />
+                            <FilterSidebar departments={departments} />
                         </div>
                         {/* <!-- End Filters Column for destop and laptop --> */}
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import profileEndPoints from "@/constants/endpoints/profile/profileEndPoints";
 import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
 
     const getUserProfile = async () => {
         try {
-            const response = await getData(profileEndPoints.getProfile);
+            const response = await getData(profileEndPoints.getProfile, true, 0);
             if (!response.data.is_verified) {
                 router.push(`verify_email?email=${response.data.email}&user_type=${userType}`);
             }

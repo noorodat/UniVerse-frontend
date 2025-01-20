@@ -22,7 +22,7 @@ const Categories = () => {
                 value={getCategory}
                 className="form-select"
             >
-                <option value="">Choose a category</option>
+                <option value="">Choose a department</option>
                 {category?.map((item) => (
                     <option key={item.id} value={item.value}>
                         {item.name}

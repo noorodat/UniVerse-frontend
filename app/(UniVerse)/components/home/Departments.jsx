@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 import departmentEndPoints from "@/constants/endpoints/department/departmentEndPoints";
 

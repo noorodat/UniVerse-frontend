@@ -10,6 +10,7 @@ import CustomFormTextArea from "@/components/custom/inputs/CustomFormTextArea";
 import CustomFormInput from "@/components/custom/inputs/CustomFormInput";
 import CustomAsyncSelect from "@/components/custom/select/CustomAsyncSelect";
 import CustomFormSelect from "@/components/custom/select/CustomFormSelect";
+import CustomDatePickerInput from "@/components/custom/inputs/CustomDatePickerInput";
 import CustomFormSubmittionButton from "@/components/custom/buttons/CustomFormSubmittionButton";
 import { useUser } from "@/contexts/UserContext";
 import { updateJob } from "@/server-actions/job/actions";
@@ -35,6 +36,8 @@ const EditBoxForm = ({ job, departments }) => {
   const [newRequirement, setNewRequirement] = useState("");
   const [selectedRequirements, setSelectedRequirements] = useState(requirementOptions);
 
+  const [endDate, setEndDate] = useState(job.end_date);
+
   const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm({
     resolver: zodResolver(jobValidations),
     defaultValues: {
@@ -44,6 +47,7 @@ const EditBoxForm = ({ job, departments }) => {
       location: job.location,
       salary_range: job.salary_range,
       department_id: job.department.id,
+      end_date: new Date(job.end_date),
       tags: selectedTags.map((tag) => tag.value),
       requirements: selectedRequirements.map((req) => req.value),
     }
@@ -116,17 +120,30 @@ const EditBoxForm = ({ job, departments }) => {
 
         {/* Industry */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Department</label>
           <CustomFormSelect
             name={"department_id"}
-            selectName={'department'}
+            selectName={'job field'}
             data={departments}
             register={register}
             errors={errors.department_id}
-            label={"Department"}
+            label={"job field"}
             valueKey={"id"}
             labelKey={"name"}
             defaultValue={job.department.id}
+          />
+        </div>
+
+        { /* Job Post Deadline */}
+        <div className="form-group col-lg-6 col-md-12">
+          <CustomDatePickerInput
+            label="Job post deadline"
+            value={endDate}
+            setValue={(name, date) => {
+              setEndDate(date);
+              setValue(name, date);
+            }}
+            name="end_date"
+            errors={errors.end_date}
           />
         </div>
 

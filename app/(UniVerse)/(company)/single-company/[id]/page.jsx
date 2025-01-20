@@ -5,9 +5,7 @@ import DefaulHeader from "@/components/header/DefaulHeader";
 import MobileMenu from "@/components/header/MobileMenu";
 import JobDetailsDescriptions from "@/components/employer-single-pages/shared-components/JobDetailsDescriptions";
 import RelatedJobs from "@/components/employer-single-pages/related-jobs/RelatedJobs";
-import Social from "@/components/employer-single-pages/social/Social";
-import Image from "next/image";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import { buildEndpoint } from "@/utils/buildEndpoint";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 import { Suspense } from "react";
@@ -28,8 +26,7 @@ const EmployersSingleV1 = async ({ params }) => {
 
   const { data: company, error } = await getData(buildEndpoint(companyEndPoints.getCompanyInfo, { id }), true, 0);
 
-  const employer =
-    employersInfo.find((item) => item.id == id) || employersInfo[0];
+  if (error) return <CustomErrorPage title={'Oops!'} description={'Something wrong happened!'} />
 
   return (
     <>
@@ -57,21 +54,27 @@ const EmployersSingleV1 = async ({ params }) => {
                     <h4>{company?.name}</h4>
 
                     <ul className="job-info">
-                      <li>
-                        <span className="icon flaticon-map-locator"></span>
-                        {company?.city} {", "} {company?.country}
-                      </li>
+                      {company?.city && company?.country && (
+                        <li>
+                          <span className="icon flaticon-map-locator"></span>
+                          {company?.city} {", "} {company?.country}
+                        </li>
+                      )}
                       {/* compnay info */}
-                      <li>
-                        <span className="icon flaticon-briefcase"></span>
-                        {company?.industry}
-                      </li>
-                      {/* location info */}
-                      <li>
-                        <span className="icon flaticon-telephone-1"></span>
-                        {company?.phone}
-                      </li>
-                      {/* time info */}
+                      {company?.industry && (
+                        <li>
+                          <span className="icon flaticon-briefcase"></span>
+                          {company?.industry}
+                        </li>
+                      )}
+                      {/* phone info */}
+                      {company?.phone && (
+                        <li>
+                          <span className="icon flaticon-telephone-1"></span>
+                          {company?.phone}
+                        </li>
+                      )}
+                      {/* email info */}
                       <li>
                         <span className="icon flaticon-mail"></span>
                         {company?.email}
@@ -101,19 +104,23 @@ const EmployersSingleV1 = async ({ params }) => {
               <div className="row">
                 <div className="content-column col-lg-8 col-md-12 col-sm-12">
                   {/*  job-detail */}
-                  <JobDetailsDescriptions />
+                  {company?.about && (
+                    <JobDetailsDescriptions about={company?.about} />
+                  )}
                   {/* End job-detail */}
 
                   {/* <!-- Related Jobs --> */}
-                  <div className="related-jobs">
-                    <div className="title-box">
-                      <h3>Related Jobs</h3>
-                    </div>
-                    {/* End .title-box */}
+                  {company?.related_jobs && (
+                    <div div className="related-jobs">
+                      <div className="title-box">
+                        <h3>Related Jobs</h3>
+                      </div>
+                      {/* End .title-box */}
 
-                    <RelatedJobs company={company} />
-                    {/* End RelatedJobs */}
-                  </div>
+                      <RelatedJobs company={company} />
+                      {/* End RelatedJobs */}
+                    </div>
+                  )}
                   {/* <!-- Related Jobs --> */}
                 </div>
                 {/* End .content-column */}
@@ -124,22 +131,30 @@ const EmployersSingleV1 = async ({ params }) => {
                       <div className="widget-content">
                         {/*  compnay-info */}
                         <ul className="company-info mt-0">
-                          <li>
-                            Primary industry: <span>{company?.industry}</span>
-                          </li>
-                          <li>
-                            Phone: <span>{company?.phone}</span>
-                          </li>
+                          {company?.industry && (
+                            <li>
+                              Primary industry: <span>{company?.industry}</span>
+                            </li>
+                          )}
+                          {company?.phone && (
+                            <li>
+                              Phone: <span>{company?.phone}</span>
+                            </li>
+                          )}
                           <li>
                             Email: <span>{company?.email}</span>
                           </li>
-                          <li>
-                            Location: <span>{company?.city}, { } {company?.country}</span>
-                          </li>
+                          {company?.city && company?.country &&
+                            <li>
+                              Location: <span>{company?.city}, { } {company?.country}</span>
+                            </li>
+                          }
                         </ul>
                         {/* End compnay-info */}
 
-                        <WebsiteURL websiteURL={company.website_url} />
+                        {company.website_url && (
+                          <WebsiteURL websiteURL={company?.website_url} />
+                        )}
                         {/* btn-box */}
                       </div>
                     </div>
@@ -154,10 +169,10 @@ const EmployersSingleV1 = async ({ params }) => {
           </div>
           {/* <!-- job-detail-outer--> */}
         </section>
-      </Suspense>
+      </Suspense >
       {/* <!-- End Job Detail Section --> */}
 
-      <FooterDefault footerStyle="alternate5" />
+      < FooterDefault footerStyle="alternate5" />
       {/* <!-- End Main Footer --> */}
     </>
   );

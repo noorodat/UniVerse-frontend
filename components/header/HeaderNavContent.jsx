@@ -11,9 +11,12 @@ import {
 } from "../../data/mainMenuData";
 import { isActiveLink } from "../../utils/linkActiveChecker";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 const HeaderNavContent = () => {
   const currentPath = usePathname();
+
+  const { userType } = useAuth();
 
   return (
     <>
@@ -24,9 +27,11 @@ const HeaderNavContent = () => {
           </li>
           {/* End homepage menu items */}
 
-          <li className={isActiveLink(findJobLink.routePath, currentPath) ? "current" : ""}>
-            <Link href={findJobLink.routePath}>{findJobLink.name}</Link>
-          </li>
+          {userType == "student" && (
+            <li className={isActiveLink(findJobLink.routePath, currentPath) ? "current" : ""}>
+              <Link href={findJobLink.routePath}>{findJobLink.name}</Link>
+            </li>
+          )}
           {/* End findjobs menu items */}
 
           <li className={isActiveLink(employerLink.routePath, currentPath) ? "current" : ""}>
@@ -39,9 +44,9 @@ const HeaderNavContent = () => {
           </li>
           {/* End Candidates menu items */}
 
-          <li className={isActiveLink(blogLink.routePath, currentPath) ? "current" : ""}>
+          {/* <li className={isActiveLink(blogLink.routePath, currentPath) ? "current" : ""}>
             <Link href={blogLink.routePath}>{blogLink.name}</Link>
-          </li>
+          </li> */}
           {/* End Blog menu items */}
         </ul>
       </nav>

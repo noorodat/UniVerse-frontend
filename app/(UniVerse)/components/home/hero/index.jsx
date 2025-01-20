@@ -1,7 +1,7 @@
 import SearchForm2 from "@/components/common/job-search/SearchForm2";
 import ImageBox from "./ImageBox";
 
-const index = () => {
+const index = ({ departments }) => {
   return (
     <section className="banner-section-three">
       <div className="auto-container">
@@ -23,7 +23,7 @@ const index = () => {
                 data-aos-delay="500"
                 data-aos="fade-up"
               >
-                <SearchForm2 />
+                <SearchForm2 departments={departments} />
               </div>
             </div>
           </div>

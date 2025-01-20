@@ -18,9 +18,11 @@ const CustomSuccessPage = ({ title, description, path, goTo }) => {
                     <h1>{title} <span className="icon flaticon-success text-green"></span></h1>
                     <p>{description}</p>
 
-                    <Link className="theme-btn btn-style-three call-modal" href={`${path}`}>
-                        GO TO {goTo.toUpperCase()}
-                    </Link>
+                    {goTo && path && (
+                        <Link className="theme-btn btn-style-three call-modal" href={`${path}`}>
+                            GO TO {goTo.toUpperCase()}
+                        </Link>
+                    )}
                 </div>
                 {/* End .content */}
             </div>

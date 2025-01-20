@@ -4,7 +4,7 @@
 
 import Link from "next/link";
 import Pagination from "../components/Pagination";
-import candidatesData from "../../../data/candidates";
+import UserImage from "@/components/common/UserImage";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCandidateGender,
@@ -25,7 +25,7 @@ import {
 } from "../../../features/candidate/candidateSlice";
 import Image from "next/image";
 
-const FilterTopBox = () => {
+const FilterTopBox = ({ students }) => {
   const {
     keyword,
     location,
@@ -44,13 +44,15 @@ const FilterTopBox = () => {
   // keyword filter
   const keywordFilter = (item) =>
     keyword !== ""
-      ? item?.name?.toLowerCase().includes(keyword?.toLowerCase()) && item
+      ? (item?.first_name?.toLowerCase().includes(keyword?.toLowerCase()) ||
+        item?.last_name?.toLowerCase().includes(keyword?.toLowerCase())) && item
       : item;
+
 
   // location filter
   const locationFilter = (item) =>
     location !== ""
-      ? item?.location?.toLowerCase().includes(location?.toLowerCase())
+      ? item?.university?.name.toLowerCase().includes(location?.toLowerCase())
       : item;
 
   // destination filter
@@ -61,8 +63,8 @@ const FilterTopBox = () => {
   // category filter
   const categoryFilter = (item) =>
     category !== ""
-      ? item?.category?.toLocaleLowerCase() === category?.toLocaleLowerCase()
-      : item;
+      ? item.department?.name.toLowerCase() === category.toLowerCase()
+      : true;
 
   // gender filter
   const genderFilter = (item) =>
@@ -101,65 +103,46 @@ const FilterTopBox = () => {
   const sortFilter = (a, b) =>
     sort === "des" ? a.id > b.id && -1 : a.id < b.id && -1;
 
-  let content = candidatesData
-    ?.slice(perPage.start, perPage.end === 0 ? 10 : perPage.end)
+  let content = students
     ?.filter(keywordFilter)
     ?.filter(locationFilter)
-    ?.filter(destinationFilter)
     ?.filter(categoryFilter)
-    ?.filter(genderFilter)
-    ?.filter(datePostedFilter)
-    ?.filter(experienceFilter)
-    ?.filter(qualificationFilter)
     ?.sort(sortFilter)
-    ?.map((candidate) => (
+    ?.map((student) => (
       <div
         className="candidate-block-four col-lg-6 col-md-6 col-sm-12"
-        key={candidate.id}
+        key={student.id}
       >
         <div className="inner-box">
-          <ul className="job-other-info">
-            <li className="green">Featured</li>
-          </ul>
-
           <span className="thumb">
-            <Image
-              width={90}
-              height={90}
-              src={candidate.avatar}
-              alt="candidates"
-            />
+            <UserImage url={student.image} width={90} height={90} />
           </span>
           <h3 className="name">
-            <Link href={`/candidates-single/${candidate.id}`}>
-              {candidate.name}
+            <Link href={`/single-student/${student.id}`}>
+              {student.first_name} {student.last_name}
             </Link>
           </h3>
-          <span className="cat">{candidate.designation}</span>
+          <span className="cat">{student.designation}</span>
 
           <ul className="job-info">
-            <li>
-              <span className="icon flaticon-map-locator"></span>{" "}
-              University
-            </li>
-            <li>
-              <span className="icon flaticon-money"></span>
-              Major
-            </li>
+            {student.university?.name && (
+              <li>
+                <span className="icon flaticon-map-locator"></span>{" "}
+                {student.university?.name}
+              </li>
+            )}
+            {student.department?.name && (
+              <li class="time">
+                <span class="icon flaticon-briefcase"></span>
+                {student.department?.name}
+              </li>
+            )}
           </ul>
+
           {/* End candidate-info */}
 
-          <ul className="post-tags">
-            {candidate?.tags?.map((val, i) => (
-              <li key={i}>
-                <a href="#">{val}</a>
-              </li>
-            ))}
-          </ul>
-          {/* End tags */}
-
           <Link
-            href={`/candidates-single/${candidate.id}`}
+            href={`/single-student/${student.id}`}
             className="theme-btn btn-style-three"
           >
             View Profile
@@ -212,7 +195,7 @@ const FilterTopBox = () => {
           {/* Collapsible sidebar button */}
 
           <div className="text">
-            <strong>{content?.length}</strong> jobs
+            <strong>{content?.length}</strong> Students
           </div>
         </div>
         {/* End showing-result */}
@@ -296,7 +279,7 @@ const FilterTopBox = () => {
       <div className="row">{content}</div>
       {/* End .row */}
 
-      <Pagination />
+      {/* <Pagination /> */}
       {/* <!-- Listing Show More --> */}
     </>
   );

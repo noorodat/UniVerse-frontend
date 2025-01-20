@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import DEFAULT_USER_IMAGE from "@/constants/images/defaultUserImage";
 import studentEndPoints from "@/constants/endpoints/student/studentEndPoints";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import CustomErrorPage from "../custom/errors/CustomErrorPage";
 
 const StudentFeatured = async () => {
@@ -43,18 +43,20 @@ const StudentFeatured = async () => {
                                             <Link href={`/single-student/${student.id}`}>{student.first_name} {" "} {student.last_name}</Link>
                                         </h4>
 
-                                        <ul className="job-info">
-                                            <li>
-                                                <span className="icon flaticon-briefcase"></span>
-                                                {student.university.name}
-                                            </li>
-                                            {/* university info */}
-                                        </ul>
+                                        {student?.university && (
+                                            <ul className="job-info">
+                                                <li>
+                                                    <span className="icon flaticon-briefcase"></span>
+                                                    {student.university?.name}
+                                                </li>
+                                                {/* university info */}
+                                            </ul>
+                                        )}
                                         {/* End .job-info */}
 
                                         {student?.department && (
                                             <ul className="job-other-info d-flex">
-                                                <li className="time">{student.department.name}</li>
+                                                <li className="time">{student.department?.name}</li>
                                             </ul>
                                         )}
                                         {/* End .job-other-info */}

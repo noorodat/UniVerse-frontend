@@ -1,4 +1,3 @@
-import Link from "next/link"
 import CustomSuccessPage from "@/components/custom/success/CustomSuccessPage"
 
 export default function VerificationSuccessful() {

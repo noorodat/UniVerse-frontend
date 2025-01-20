@@ -1,12 +1,11 @@
 import dynamic from "next/dynamic";
-import candidates from "@/data/candidates";
 import FooterDefault from "@/components/footer/common-footer";
 import DefaulHeader from "@/components/header/DefaulHeader";
 import MobileMenu from "@/components/header/MobileMenu";
 import Social from "@/components/candidates-single-pages/social/Social";
 import JobSkills from "@/components/candidates-single-pages/shared-components/JobSkills";
 import StudentResume from "../../components/StudentResume";
-import { getData } from "@/utils/getData"
+import { getData } from "@/utils/get-data/getData"
 import { buildEndpoint } from "@/utils/buildEndpoint"
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage"
 import studentEndPoints from "@/constants/endpoints/student/studentEndPoints";
@@ -33,8 +32,6 @@ const page = async ({ params }) => {
 
     console.log("student", student);
 
-    const candidate = candidates.find((item) => item.id == id) || candidate[0];
-
     return (
         <>
             {/* <!-- Header Span --> */}
@@ -56,7 +53,9 @@ const page = async ({ params }) => {
                                     <UserImage url={student.image} />
                                 </figure>
                                 <h4 className="name">{student.first_name} {student.last_name}</h4>
-                                <span className="designation">{student?.university.name}</span>
+                                {student.university?.name && (
+                                    <span className="designation">{student.university?.name}</span>
+                                )}
 
                                 <div className="content">
                                     {/* <ul className="post-tags">
@@ -67,12 +66,15 @@ const page = async ({ params }) => {
                                     {/* End post-tags */}
 
                                     <ul className="candidate-info">
-                                        <li>
-                                            <span className="icon flaticon-phone"></span>
-                                            {"0"}{student?.phone}
-                                        </li>
-
-                                        <li className="time"><span className="icon flaticon-briefcase"></span>{student?.department?.name}</li>
+                                        {student?.phone && (
+                                            <li>
+                                                <span className="icon flaticon-phone"></span>
+                                                {"0"}{student?.phone}
+                                            </li>
+                                        )}
+                                        {student.department?.name && (
+                                            <li className="time"><span className="icon flaticon-briefcase"></span>{student.department?.name}</li>
+                                        )}
                                     </ul>
                                     {/* End candidate-info */}
 
@@ -97,22 +99,26 @@ const page = async ({ params }) => {
                                 <aside className="sidebar">
 
                                     {/* End .sidebar-widget conadidate overview */}
-                                    <div className="sidebar-widget">
-                                        <h4 className="widget-title">Student Skills</h4>
-                                        <div className="widget-content">
-                                            <ul className="job-skills">
-                                                <JobSkills skills={student?.skills} />
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="sidebar-widget social-media-widget">
-                                        <h4 className="widget-title">Social media</h4>
-                                        <div className="widget-content">
-                                            <div className="social-links">
-                                                <Social github={student?.github} linkedIn={student?.linkedin} />
+                                    {student?.skills.length > 0 && (
+                                        <div className="sidebar-widget">
+                                            <h4 className="widget-title">Student Skills</h4>
+                                            <div className="widget-content">
+                                                <ul className="job-skills">
+                                                    <JobSkills skills={student?.skills} />
+                                                </ul>
                                             </div>
                                         </div>
-                                    </div>
+                                    )}
+                                    {(student?.github || student?.linkedin) && (
+                                        <div className="sidebar-widget social-media-widget">
+                                            <h4 className="widget-title">Social media</h4>
+                                            <div className="widget-content">
+                                                <div className="social-links">
+                                                    <Social github={student?.github} linkedIn={student?.linkedin} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                     {student.portfolio && (
                                         <div className="sidebar-widget">
                                             <h4 className="widget-title">Profolio</h4>

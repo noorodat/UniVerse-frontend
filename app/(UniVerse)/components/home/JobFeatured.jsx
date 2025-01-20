@@ -2,12 +2,12 @@ import Link from "next/link";
 import DEFAULT_USER_IMAGE from "@/constants/images/defaultUserImage";
 import Image from "next/image";
 import jobEndPoints from "@/constants/endpoints/job/jobEndPoints";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 
 const JobFeatured = async () => {
 
-  const { data: jobs, error } = await getData(jobEndPoints.featuredJobs);
+  const { data: jobs, error } = await getData(jobEndPoints.featuredJobs, true, 0);
 
   if (error) return <CustomErrorPage title={'Oops!'} description={'Something wrong happened!'} />
 

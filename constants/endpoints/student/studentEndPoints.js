@@ -3,5 +3,7 @@ export default {
     'verifyStudent': 'api/students/verify_otp/',
     'requestNewStudentOTP': 'api/students/request_new_otp/',
     'featuredStudents': 'api/students/featured_students/',
-    getStudent: `api/students/{id}/`
+    getStudent: `api/students/{id}/`,
+    getStudents: `api/students/`,
+    searchStudents: `api/students/search/`
 }

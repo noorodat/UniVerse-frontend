@@ -1,20 +1,16 @@
-import { getUserToken } from "@/utils/getUserToken";
+import { getCookie } from "@/utils/getCookie";
 import { redirect } from "next/navigation";
-import { getData } from "@/utils/getData";
-import profileEndPoints from "@/constants/endpoints/profile/profileEndPoints";
 
 export default async function AuthLayout({ children }) {
-    const token = await getUserToken();
-    if (token) {
-        try {
-            const response = await getData(profileEndPoints.getUser, true, 0);
-            if (response.data.is_logged_in) {
-                redirect('/')
-            }
-        } catch { } {
-            
-        }
+
+    const accessToken = await getCookie('access_token');
+    const refreshToken = await getCookie('refresh_token');
+    const userId = await getCookie('user_id');
+
+    if (accessToken && refreshToken && userId) {
+        redirect('/');
     }
+
     return (
         <>
             {children}

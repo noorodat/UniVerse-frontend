@@ -3,11 +3,11 @@ import UserImage from "@/components/common/UserImage";
 
 const RelatedJobs = ({ company }) => {
 
-  const { random_jobs: realatedJobs } = company;
+  const realatedJobs = company?.random_jobs;
 
   return (
     <>
-      {realatedJobs.map((job) => (
+      {realatedJobs?.map((job) => (
         <div className="job-block" key={job.id}>
           <div className="inner-box">
             <div className="content">

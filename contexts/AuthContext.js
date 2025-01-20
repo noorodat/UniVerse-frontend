@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, use } from "react";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 import authEndpoints from "@/constants/endpoints/auth/authEndpoints";

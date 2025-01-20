@@ -10,4 +10,5 @@ export default z.object({
     website_url: z.string().nullable(),
     country: z.string().nullable(),
     city: z.string().nullable(),
+    about: z.string().max(700, "Maximum 700 characters are allowed").nullable(),
 });

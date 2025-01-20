@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import AllApplicants from "@/app/(UniVerse)/(company)/components/company-dashboard/all-applicants";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import jobEndPoints from "@/constants/endpoints/job/jobEndPoints";
 import { buildEndpoint } from "@/utils/buildEndpoint";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
@@ -20,6 +20,10 @@ const index = async ({ params }) => {
     const { data: allApplicants, error } = await getData(buildEndpoint(jobEndPoints.showJobApplicants, { id }), true, 0);
 
     if (error) return <CustomErrorPage title={"Oops!"} description={"Something wrong happened!"} />;
+
+    console.log("allApplicantsallApplicantsallApplicantsallApplicantsallApplicants");
+    console.log(allApplicants);
+    console.log("allApplicantsallApplicantsallApplicantsallApplicantsallApplicants");
 
     return (
         <>

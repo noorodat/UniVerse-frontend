@@ -3,7 +3,7 @@
 'use client'
 
 import Link from "next/link";
-import companyData from "../../../data/topCompany";
+import UserImage from "@/components/common/UserImage";
 import Pagination from "../components/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,9 +15,8 @@ import {
   addPerPage,
   addSort,
 } from "../../../features/filter/employerFilterSlice";
-import Image from "next/image";
 
-const FilterTopBox = () => {
+const FilterTopBox = ({ companies }) => {
   const {
     keyword,
     location,
@@ -38,8 +37,9 @@ const FilterTopBox = () => {
   // location filter
   const locationFilter = (item) =>
     location !== ""
-      ? item?.location?.toLowerCase().includes(location?.toLowerCase())
-      : item;
+      ? item?.city?.toLowerCase().includes(location?.toLowerCase()) ||
+      item?.country?.toLowerCase().includes(location?.toLowerCase())
+      : true;
 
   // destination filter
   const destinationFilter = (item) =>
@@ -61,13 +61,10 @@ const FilterTopBox = () => {
   const sortFilter = (a, b) =>
     sort === "des" ? a.id > b.id && -1 : a.id < b.id && -1;
 
-  let content = companyData
-    ?.slice(perPage.start !== 0 && 12, perPage.end !== 0 ? perPage.end : 21)
+  let content = companies
     ?.filter(keywordFilter)
     ?.filter(locationFilter)
-    ?.filter(destinationFilter)
     ?.filter(categoryFilter)
-    ?.filter(foundationDataFilter)
     ?.sort(sortFilter)
     ?.map((company) => (
       <div
@@ -80,33 +77,30 @@ const FilterTopBox = () => {
           </button>
 
           <div className="content-inner">
-            <span className="featured">Featured</span>
             <span className="company-logo">
-              <Image
-                width={50}
-                height={50}
-                src={company.img}
-                alt="company brand"
-              />
+              <UserImage url={company.image} />
             </span>
             <h4>
-              <Link href={`/employers-single/${company.id}`}>
+              <Link href={`/single-company/${company.id}`}>
                 {company.name}
               </Link>
             </h4>
             <ul className="job-info flex-column">
-              <li className="me-0">
-                <span className="icon flaticon-map-locator"></span>
-                {company.location}
-              </li>
-              <li className="me-0">
-                <span className="icon flaticon-briefcase"></span>
-                {company.jobType}
-              </li>
+              {company.country && company.city && (
+                <li className="me-0">
+                  <span className="icon flaticon-map-locator"></span>
+                  {company.country}, {company.city}
+                </li>
+              )}
+              {company.industry && (
+                <li className="me-0">
+                  <span className="icon flaticon-briefcase"></span>
+                  {company.industry}
+                </li>
+              )}
             </ul>
           </div>
-
-          <div className="job-type me-0">Open Jobs – {company.jobNumber}</div>
+          {/* <div className="job-type me-0">Open Jobs – {company.jobNumber}</div> */}
         </div>
       </div>
     ));
@@ -137,21 +131,21 @@ const FilterTopBox = () => {
       <div className="ls-switcher">
         <div className="showing-result">
           <div className="text">
-            <strong>{content?.length}</strong> jobs
+            <strong>{content?.length}</strong> Companies
           </div>
         </div>
         {/* End showing-result */}
         <div className="sort-by">
           {keyword !== "" ||
-          location !== "" ||
-          destination.min !== 0 ||
-          destination.max !== 100 ||
-          category !== "" ||
-          foundationDate.min !== 1900 ||
-          foundationDate.max !== 2028 ||
-          sort !== "" ||
-          perPage.start !== 0 ||
-          perPage.end !== 0 ? (
+            location !== "" ||
+            destination.min !== 0 ||
+            destination.max !== 100 ||
+            category !== "" ||
+            foundationDate.min !== 1900 ||
+            foundationDate.max !== 2028 ||
+            sort !== "" ||
+            perPage.start !== 0 ||
+            perPage.end !== 0 ? (
             <button
               onClick={clearAll}
               className="btn btn-danger text-nowrap me-2"
@@ -221,7 +215,7 @@ const FilterTopBox = () => {
       <div className="row">{content}</div>
       {/* End .row */}
 
-      <Pagination />
+      {/* <Pagination /> */}
       {/* <!-- Pagination --> */}
     </>
   );

@@ -2,7 +2,8 @@
 'use client'
 
 import CallToActions from "../components/CallToActions";
-import Categories from "../components/Categories";
+import Departments from "../components/Departments";
+import FilterDepartments from "./FilterDepartments";
 import DatePosted from "../components/DatePosted";
 import ExperienceLevel from "../components/ExperienceLevel";
 import JobType from "../components/JobType";
@@ -11,7 +12,7 @@ import SalaryRangeSlider from "../components/SalaryRangeSlider";
 import SearchBox from "../components/SearchBox";
 import Tag from "../components/Tag";
 
-const FilterSidebar = () => {
+const FilterSidebar = ({ departments }) => {
   return (
     <div className="inner-column">
       <div className="filters-outer">
@@ -42,7 +43,7 @@ const FilterSidebar = () => {
         <div className="filter-block">
           <h4>Department</h4>
           <div className="form-group">
-            <Categories />
+            <FilterDepartments departments={departments} />
           </div>
         </div>
         {/* <!-- Filter Block --> */}

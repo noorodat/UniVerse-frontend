@@ -3,25 +3,16 @@
 import Slider from "react-slick";
 import Link from "next/link";
 import Image from "next/image";
-import companyEndPoints from "@/constants/endpoints/company/companyEndPoints";
-import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
-import useFetch from "@/hooks/useFetch";
-import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
 import DEFAULT_USER_IMAGE from "@/constants/images/defaultUserImage";
 
-const TopCompany = () => {
-
-  const { data: companies, loading, error } = useFetch(companyEndPoints.featuredCompanies);
-  if (loading) return <CustomSpinnerLoading fullPage={false} />
-  if (error) return <CustomErrorPage title={'Oops!'} description={'Something wrong happened!'} />
+const TopCompany = ({ companies }) => {
 
   console.log(companies);
-
 
   const settings = {
     dots: true,
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: companies?.length >= 2 ? 2 : 1,
     slidesToScroll: 2,
     autoplay: false,
     responsive: [
@@ -55,7 +46,7 @@ const TopCompany = () => {
   return (
     <>
       {
-        companies.length > 0 && (
+        companies?.length > 0 && (
           <section className="top-companies">
             <div className="auto-container">
               <div className="sec-title">
@@ -67,7 +58,7 @@ const TopCompany = () => {
               <div className="carousel-outer" data-aos="fade-up">
                 <div className="companies-carousel">
                   <Slider {...settings} arrows={false}>
-                    {companies.map((company, index) => (
+                    {companies?.map((company, index) => (
                       <div className="company-block" key={index}>
                         <div className="inner-box">
                           <figure className="image">
@@ -83,9 +74,11 @@ const TopCompany = () => {
                               {company.name}
                             </Link>
                           </h4>
-                          <div className="location">
-                            <i className="flaticon-map-locator"></i> {company.city} {", "} {company.country}
-                          </div>
+                          {company.city && company.country && (
+                            <div className="location">
+                              <i className="flaticon-map-locator"></i> {company.city} {", "} {company.country}
+                            </div>
+                          )}
                           <Link
                             href={`/`}
                             className="theme-btn btn-style-three"

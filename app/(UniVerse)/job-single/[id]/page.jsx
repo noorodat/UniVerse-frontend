@@ -8,7 +8,7 @@ import JobDetailsDescriptions from "@/components/job/single-job/JobDetailsDescri
 import jobEndPoints from "@/constants/endpoints/job/jobEndPoints";
 import { buildEndpoint } from "@/utils/buildEndpoint";
 import SingleJobHeader from "../components/SingleJobHeader";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 import CompanyInfoWedgit from "@/components/job/single-job/CompanyInfoWedgit";
 
@@ -41,7 +41,7 @@ const SignleJob = async ({ params }) => {
       <section className="job-detail-section">
         <SingleJobHeader
           company={company}
-          jobData={{ title: job.title, type: job.type, salaryRange: job.salary_range, jobId: job.id, status: job.status }}
+          jobData={{ title: job.title, type: job.type, salaryRange: job.salary_range, jobId: job.id, isActive: job.is_active }}
           department={department.name}
         />
         {/* <!-- Upper Box --> */}
@@ -72,7 +72,7 @@ const SignleJob = async ({ params }) => {
                   <div className="sidebar-widget">
                     {/* <!-- Job Overview --> */}
                     <h4 className="widget-title">Job Overview</h4>
-                    <JobOverView overViewData={{ title: job.title, createdAt: job.created_at, country: company.country, city: company.city, status: job.status }} />
+                    <JobOverView overViewData={{ title: job.title, createdAt: job.created_at, country: company.country, city: company.city, isActive: job.is_active }} />
 
                     <h4 className="widget-title mt-5">Job Skills</h4>
                     <div className="widget-content">

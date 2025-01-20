@@ -57,7 +57,7 @@ export default function SingleJobHeader({ company, jobData, department }) {
                         {/* End .content */}
 
                         <div className="btn-box">
-                            <ApplyForJobOrEditButton companyID={company.id} status={jobData.status} jobId={jobData.jobId} />
+                            <ApplyForJobOrEditButton companyID={company.id} isActive={jobData.isActive} jobId={jobData.jobId} />
                             <SaveJobButton />
                         </div>
                         {/* End apply for job btn */}

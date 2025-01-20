@@ -14,7 +14,6 @@ export default function CustomFormSelect({
     return (
         <>
             <label>{label}</label>
-            {errors && <p className="text-red mt-2">{errors.message}</p>}
             <select
                 className="chosen-single form-select"
                 name={name}
@@ -28,6 +27,7 @@ export default function CustomFormSelect({
                     </option>
                 ))}
             </select>
+            {errors && <p className="text-red mt-2">{errors.message}</p>}
         </>
     );
 }

@@ -47,6 +47,7 @@ const JobListingsTable = ({ jobs }) => {
                     <th>Title</th>
                     <th>Applications</th>
                     <th>Created</th>
+                    <th>Job deadline</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -96,7 +97,10 @@ const JobListingsTable = ({ jobs }) => {
                       <td>
                         {formatDate(job.created_at, true)}
                       </td>
-                      <td className={`${job.status ? "status" : "text-red"}`}>{job.status ? "Active" : "Inactive"}</td>
+                      <td>
+                        {formatDate(job.end_date, true)}
+                      </td>
+                      <td className={`${job.is_active ? "status" : "text-red"}`}>{job.is_active ? "Active" : "Inactive"}</td>
                       <td>
                         <div className="option-box">
                           <ul className="option-list">

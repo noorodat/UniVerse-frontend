@@ -8,5 +8,7 @@ export default {
     showJobApplicants: `/api/job_posts/{id}/applicants/`,
     approveApplication: `/api/applications/{id}/approve/`,
     rejectApplication: `/api/applications/{id}/reject/`,
-    deleteApplicaiton: `/api/applications/{id}/delete/`
+    deleteApplicaiton: `/api/applications/{id}/delete/`,
+    showAllApplicantsByCompany: `/api/companies/{id}/applications/`,
+    jobSearch: `/api/job_posts/search/`
 };

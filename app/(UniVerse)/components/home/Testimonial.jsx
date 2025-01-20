@@ -3,6 +3,7 @@
 import Image from "next/image";
 import testimonilaContent from "@/data/testimonial";
 import Slider from "react-slick";
+import UserImage from "@/components/common/UserImage";
 
 const Testimonial = () => {
   const settings = {

@@ -5,12 +5,10 @@ import { useUser } from "@/contexts/UserContext";
 import Link from "next/link";
 
 
-export default function ApplyForJobOrEditButton({ companyID = null, status, jobId }) {
+export default function ApplyForJobOrEditButton({ companyID = null, isActive, jobId }) {
 
   const { userType } = useAuth();
   const { id } = useUser();
-  console.log(userType)
-  console.log(status)
 
   if (id == companyID && userType === "company") {
     return (
@@ -25,7 +23,7 @@ export default function ApplyForJobOrEditButton({ companyID = null, status, jobI
 
   return (
     <>
-      {userType === "student" && status && (
+      {userType === "student" && isActive && (
         <a
           href="#"
           className="theme-btn btn-style-one"

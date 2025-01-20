@@ -58,7 +58,6 @@ const CvUploader = () => {
             setManager([]);
         } catch (error) {
             toast.error(error.message);
-            console.error(error.message);
         }
     };
 

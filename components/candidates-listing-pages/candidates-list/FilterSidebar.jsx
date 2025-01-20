@@ -1,13 +1,9 @@
+import FilterDepartments from "@/components/job-listing-pages/job-list/FilterDepartments";
 import Categories from "../components/Categories";
-import DestinationRangeSlider from "../components/DestinationRangeSlider";
-import CandidatesGender from "../components/CandidatesGender";
 import LocationBox from "../components/LocationBox";
 import SearchBox from "../components/SearchBox";
-import DatePosted from "../components/DatePosted";
-import Experience from "../components/Experience";
-import Qualification from "../components/Qualification";
 
-const FilterSidebar = () => {
+const FilterSidebar = ({ departments }) => {
     return (
         <div className="inner-column pd-right">
             <div className="filters-outer">
@@ -20,7 +16,7 @@ const FilterSidebar = () => {
                 {/* End .close filter */}
 
                 <div className="filter-block">
-                    <h4>Search by Keywords</h4>
+                    <h4>Search by name</h4>
                     <div className="form-group">
                         <SearchBox />
                     </div>
@@ -28,48 +24,48 @@ const FilterSidebar = () => {
                 {/* <!-- Filter Block --> */}
 
                 <div className="filter-block">
-                    <h4>Location</h4>
+                    <h4>University</h4>
                     <div className="form-group">
                         <LocationBox />
                     </div>
-
+                    {/* 
                     <p>Radius around selected destination</p>
-                    <DestinationRangeSlider />
+                    <DestinationRangeSlider /> */}
                 </div>
                 {/* <!-- Filter Block --> */}
 
                 <div className="filter-block">
-                    <h4>Category</h4>
+                    <h4>Department</h4>
                     <div className="form-group">
-                        <Categories />
+                        <FilterDepartments departments={departments} />
                     </div>
                 </div>
                 {/* <!-- Filter Block --> */}
 
-                <div className="filter-block">
+                {/* <div className="filter-block">
                     <h4>Candidate Gender</h4>
                     <div className="form-group">
                         <CandidatesGender />
                     </div>
-                </div>
+                </div> */}
                 {/* <!-- Filter Block --> */}
 
-                <div className="checkbox-outer">
+                {/* <div className="checkbox-outer">
                     <h4>Date Posted</h4>
                     <DatePosted />
-                </div>
+                </div> */}
                 {/* <!-- Filter Block --> */}
 
-                <div className="checkbox-outer">
+                {/* <div className="checkbox-outer">
                     <h4>Experience</h4>
                     <Experience />
-                </div>
+                </div> */}
                 {/* <!-- Filter Block --> */}
 
-                <div className=" checkbox-outer">
+                {/* <div className=" checkbox-outer">
                     <h4>Qualification</h4>
                     <Qualification />
-                </div>
+                </div> */}
                 {/* <!-- Filter Block --> */}
             </div>
             {/* Filter Outer */}

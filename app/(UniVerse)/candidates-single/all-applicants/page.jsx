@@ -9,8 +9,6 @@ export const metadata = {
 
 }
 
-
-
 const index = () => {
   return (
     <>

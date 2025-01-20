@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import AppliedJobs from "@/app/(UniVerse)/(student)/student-dashboard/applied-jobs";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import { getCookie } from "@/utils/getCookie";
 import jobEndPoints from "@/constants/endpoints/job/jobEndPoints";
 import { buildEndpoint } from "@/utils/buildEndpoint";

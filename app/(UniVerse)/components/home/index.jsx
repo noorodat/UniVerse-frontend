@@ -11,16 +11,20 @@ import DefaulHeader from "../../../../components/header/DefaulHeader";
 import { Suspense } from "react";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import authEndpoints from "@/constants/endpoints/auth/authEndpoints";
 import StudentFeatured from "@/components/job-featured/StudentFeatured";
 import TopCompany from "./TopCompany";
+import departmentEndPoints from "@/constants/endpoints/department/departmentEndPoints";
+import companyEndPoints from "@/constants/endpoints/company/companyEndPoints";
 
 export default async function IndexPage() {
 
   const { data: checkUser, error: checkUserError } = await getData(authEndpoints.checkVerification);
+  const { data: departments, error: departmentsError } = await getData(departmentEndPoints.departments);
+  const { data: companies, error: companiesError } = await getData(companyEndPoints.featuredCompanies);
 
-  if (checkUserError) return <CustomErrorPage title="Oops!" description="Something wrong happened while verifying the user!" />
+  if (checkUserError || departmentsError || companiesError) return <CustomErrorPage title="Oops!" description="Something wrong happened while verifying the user!" />
 
   return (
     <>
@@ -28,12 +32,12 @@ export default async function IndexPage() {
 
       <MobileMenu />
 
-      <Hero />
+      <Hero departments={departments} />
 
       <Partners />
 
       <Suspense fallback={<CustomSpinnerLoading fullPage={false} />}>
-        <Departments />
+        {checkUser.user_type === "student" ? <Departments /> : null}
       </Suspense>
 
       <Suspense fallback={<CustomSpinnerLoading fullPage={false} />}>
@@ -42,7 +46,9 @@ export default async function IndexPage() {
 
       <Testimonial />
 
-      <TopCompany />
+      <Suspense fallback={<CustomSpinnerLoading fullPage={false} />}>
+        <TopCompany companies={companies} />
+      </Suspense>
 
       {checkUser?.user_type === "company" && <About />}
 

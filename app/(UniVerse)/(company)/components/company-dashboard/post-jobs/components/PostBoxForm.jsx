@@ -9,6 +9,7 @@ import jobTypeData from "@/data/selectData/job/jobTypeData";
 import CustomFormTextArea from "@/components/custom/inputs/CustomFormTextArea";
 import CustomFormInput from "@/components/custom/inputs/CustomFormInput";
 import CustomAsyncSelect from "@/components/custom/select/CustomAsyncSelect";
+import CustomDatePickerInput from "@/components/custom/inputs/CustomDatePickerInput";
 import CustomFormSelect from "@/components/custom/select/CustomFormSelect";
 import CustomFormSubmittionButton from "@/components/custom/buttons/CustomFormSubmittionButton";
 import { useUser } from "@/contexts/UserContext";
@@ -27,6 +28,7 @@ const PostBoxForm = ({ departments }) => {
   const [requirements, setRequirements] = useState([]);
   const [newRequirement, setNewRequirement] = useState("");
   const [selectedRequirements, setSelectedRequirements] = useState([]);
+  const [endDate, setEndDate] = useState(null);
 
   const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm({
     resolver: zodResolver(jobValidations),
@@ -39,7 +41,7 @@ const PostBoxForm = ({ departments }) => {
         tags: selectedTags.map((tag) => tag.value),
         requirements: selectedRequirements.map((req) => req.value),
         company_id: userId,
-        status: true,
+        is_active: true,
       });
       const res = await postJob({
         ...data,
@@ -85,7 +87,7 @@ const PostBoxForm = ({ departments }) => {
         {/* Job Type */}
         <div className="form-group col-lg-6 col-md-12">
           <CustomFormSelect
-            label={"Job Type (optional)"}
+            label={"Job Type"}
             name={'type'}
             data={jobTypeData}
             register={register}
@@ -107,19 +109,37 @@ const PostBoxForm = ({ departments }) => {
           />
         </div>
 
-        {/* Industry */}
+        {/* Job field */}
         <div className="form-group col-lg-6 col-md-12">
           <CustomFormSelect
             name={"department_id"}
-            selectName={'department'}
+            selectName={'job field'}
             data={departments}
             register={register}
             errors={errors.department_id}
-            label={"Department"}
+            label={"Job field"}
             valueKey={"id"}
             labelKey={"name"}
           />
         </div>
+
+
+        {/* Start date picker */}
+
+        <div className="form-group col-lg-6 col-md-12">
+          <CustomDatePickerInput
+            label="Job post deadline"
+            value={endDate}
+            setValue={(name, date) => {
+              setEndDate(date);
+              setValue(name, date);
+            }}
+            name="end_date"
+            errors={errors.end_date}
+          />
+        </div>
+
+        {/* End date picker */}
 
         {/* Tags Select with Add Feature */}
         <div className="form-group col-lg-12 col-md-12">

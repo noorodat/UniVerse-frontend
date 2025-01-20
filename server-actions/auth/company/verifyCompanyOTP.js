@@ -14,5 +14,5 @@ export default async function verifyCompanyOTP(email, otp) {
     } catch (error) {
         throw new Error(error.message || "Verification failed");
     }
-    redirect('/verification_successful')
+    redirect('/pending-request')
 }

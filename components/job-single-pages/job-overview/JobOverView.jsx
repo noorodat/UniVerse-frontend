@@ -13,7 +13,7 @@ const JobOverView = ({ overViewData }) => {
         <li>
           <i className="icon icon-expiry"></i>
           <h5>Status</h5>
-          <span className={overViewData.status ? "text-success fw-bold" : "text-red fw-bold"}>{overViewData.status ? "Open" : "Closed"}</span>
+          <span className={overViewData.isActive ? "text-success fw-bold" : "text-red fw-bold"}>{overViewData.isActive ? "Open" : "Closed"}</span>
         </li>
         <RenderItemConditionally item={overViewData?.city && overViewData?.country}>
           <li>

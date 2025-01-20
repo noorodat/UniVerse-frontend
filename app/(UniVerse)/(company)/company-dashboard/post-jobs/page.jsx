@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import PostJob from "@/app/(UniVerse)/(company)/components/company-dashboard/post-jobs";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 import departmentEndPoints from "@/constants/endpoints/department/departmentEndPoints";
 import { Suspense } from "react";

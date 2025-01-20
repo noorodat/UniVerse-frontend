@@ -7,6 +7,7 @@ import CustomFormSubmittionButton from "@/components/custom/buttons/CustomFormSu
 import CustomFormInput from "@/components/custom/inputs/CustomFormInput";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import CustomFileInput from "@/components/custom/inputs/CustomFileInput";
 
 export default function CompanyRegisterForm() {
     const router = useRouter();
@@ -15,11 +16,23 @@ export default function CompanyRegisterForm() {
     });
 
     const onSubmit = async (data) => {
+        const formData = new FormData();
+        formData.append("name", data.name);
+        formData.append("email", data.email);
+        formData.append("password", data.password);
+
+        if (data.proof_document?.[0]) {
+            formData.append("proof_document", data.proof_document[0]);
+        }
+
+        console.log(formData.get("proof_document"));
+        // return;
+
         try {
-            await companySignup(data.name, data.email, data.password);
-            router.push(`/verify_email?email=${data.email}&user_type=${'company'}`);
+            await companySignup(formData);
+            router.push(`/verify_email?email=${data.email}&user_type=company`);
         } catch (error) {
-            toast.error(error);
+            toast.error(error.message || "Something went wrong");
         }
     };
 
@@ -52,6 +65,16 @@ export default function CompanyRegisterForm() {
                     type="password"
                 />
             </div>
+
+            <div className="form-group">
+                <CustomFileInput
+                    label="Proof Document"
+                    register={register}
+                    name="proof_document"
+                    errors={errors.proof_document}
+                />
+            </div>
+
             <div className="form-group">
                 <CustomFormSubmittionButton
                     label="Register"

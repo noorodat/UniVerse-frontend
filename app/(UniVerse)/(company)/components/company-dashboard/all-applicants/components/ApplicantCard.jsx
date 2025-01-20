@@ -1,9 +1,7 @@
-"use client"
 import Link from "next/link";
 import UserImage from "@/components/common/UserImage";
 
 export const ApplicantCard = ({ applicant, actions }) => {
-    console.log(applicant);
     return (
         <div className="candidate-block-three col-lg-6 col-md-12 col-sm-12">
             <div className="inner-box">
@@ -16,12 +14,22 @@ export const ApplicantCard = ({ applicant, actions }) => {
                             {applicant.student.first_name} {applicant.student.last_name}
                         </Link>
                     </h4>
-                    <ul className="candidate-info">
-                        <li>
-                            <span className="icon flaticon-map-locator"></span>{" "}
-                            {applicant.student.university}
-                        </li>
-                    </ul>
+                    {applicant.student?.university && (
+                        <ul className="candidate-info">
+                            <li>
+                                <span className="icon flaticon-map-locator"></span>{" "}
+                                {applicant.student.university}
+                            </li>
+                        </ul>
+                    )}
+                    {applicant.student?.email && (
+                        <ul className="candidate-info">
+                            <li>
+                                <span className="icon flaticon-email-3"></span>{" "}
+                                <a href={`mailto:${applicant.student.email}`}>{applicant.student.email}</a>
+                            </li>
+                        </ul>
+                    )}
                     <ul className="job-other-info d-flex">
                         <li className="time">{applicant.student.department}</li>
                     </ul>

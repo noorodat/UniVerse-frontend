@@ -1,7 +1,7 @@
 import Awards from "./award/Awards";
 import Experiences from "./experience/Experiences";
 import Education from "./education/Education";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import studentResumeEndpoints from "@/constants/endpoints/resume/studentResumeEndpoints";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 

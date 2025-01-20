@@ -1,8 +1,4 @@
-import Categories from "../components/Categories";
-import DestinationRangeSlider from "../components/DestinationRangeSlider";
-import CompanySize from "../components/CompanySize";
 import LocationBox from "../components/LocationBox";
-import FoundationDate from "../components/FoundationDate";
 import SearchBox from "../components/SearchBox";
 
 const FilterSidebar = () => {
@@ -30,19 +26,7 @@ const FilterSidebar = () => {
                     <div className="form-group">
                         <LocationBox />
                     </div>
-
-                    <p>Radius around selected destination</p>
-                    <DestinationRangeSlider />
                 </div>
-                {/* <!-- Filter Block --> */}
-
-                <div className="filter-block">
-                    <h4>Category</h4>
-                    <div className="form-group">
-                        <Categories />
-                    </div>
-                </div>
-                {/* <!-- Filter Block --> */}
 
                 {/* <div className="filter-block">
                     <h4>Compnay Size</h4>
@@ -50,14 +34,6 @@ const FilterSidebar = () => {
                         <CompanySize />
                     </div>
                 </div> */}
-                {/* <!-- Filter Block --> */}
-
-                <div className="filter-block">
-                    <h4>Foundation Date</h4>
-
-                    <FoundationDate />
-                </div>
-                {/* <!-- Filter Block --> */}
             </div>
             {/* Filter Outer */}
         </div>

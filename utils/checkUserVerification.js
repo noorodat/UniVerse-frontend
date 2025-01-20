@@ -1,6 +1,6 @@
 "use server"
 import authEndpoints from "@/constants/endpoints/auth/authEndpoints";
-import { getData } from "./getData";
+import { getData } from "./get-data/getData";
 
 export default async function checkUserVerification() {
     try {

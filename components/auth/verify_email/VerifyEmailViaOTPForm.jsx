@@ -8,7 +8,6 @@ import CustomFormSubmittionButton from "@/components/custom/buttons/CustomFormSu
 import verifyStudentOTP from "@/server-actions/auth/student/verifyStudentOTP";
 import verifyCompanyOTP from "@/server-actions/auth/company/verifyCompanyOTP";
 import notFound from "@/app/not-found";
-import { Spinner } from "react-bootstrap";
 import CustomServerActionButton from "@/components/custom/buttons/CustomServerActionButton";
 import requestNewStudentOTP from "@/server-actions/auth/student/requestNewStudentOTP";
 import requestNewCompanyOTP from "@/server-actions/auth/company/requestNewCompanyOTP";

@@ -1,4 +1,4 @@
-import { getData } from "../getData";
+import { getData } from "../get-data/getData";
 import logout from "@/server-actions/auth/logout";
 import authEndpoints from "@/constants/endpoints/auth/authEndpoints";
 import { NextResponse } from "next/server";

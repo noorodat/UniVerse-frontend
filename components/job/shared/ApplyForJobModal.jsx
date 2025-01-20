@@ -1,7 +1,7 @@
 import React from 'react'
 import ApplyJobModalContent from './ApplyJobModalContent'
 import { getCookie } from '@/utils/getCookie'
-import { getData } from '@/utils/getData';
+import { getData } from '@/utils/get-data/getData';
 import { buildEndpoint } from '@/utils/buildEndpoint';
 import cvEndPoints from '@/constants/endpoints/cv/cvEndPoints';
 
@@ -9,7 +9,7 @@ export default async function ApplyForJobModal({ jobId }) {
 
     const userId = await getCookie('user_id');
     // Get the cvs for the studnet
-    const { data: CVs, error } = await getData(buildEndpoint(cvEndPoints.getStudentCVs, { id: userId }));
+    const { data: CVs, error } = await getData(buildEndpoint(cvEndPoints.getStudentCVs, { id: userId }), true, 0);
 
     return (
         <div

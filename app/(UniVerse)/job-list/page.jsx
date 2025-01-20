@@ -1,27 +1,39 @@
 import dynamic from "next/dynamic";
 import JobList from "@/components/job-listing-pages/job-list";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 import { Suspense } from "react";
 import jobEndPoints from "@/constants/endpoints/job/jobEndPoints";
-import CustomSpinnerLoading from "@/components/custom/loading/CustomSpinnerLoading";
+import departmentEndPoints from "@/constants/endpoints/department/departmentEndPoints";
 
 export const metadata = {
   title: "Universe | Job List",
-  description: "Superio - Job Borad React NextJS Template",
+  description: "Superio - Job Board React NextJS Template",
 };
 
-const index = async () => {
+const index = async ({ searchParams }) => {
+  const { search, department } = searchParams;
 
-  const { data: jobs, error } = await getData(jobEndPoints.jobPosts)
-  if (error) return <CustomErrorPage title={'Oops!'} description={'Something wrong happened!'} />
+  const isSearch = search || department;
+  const endpoint = isSearch ? jobEndPoints.jobSearch : jobEndPoints.jobPosts;
+
+  const jobEndpoint = new URLSearchParams();
+  if (search) jobEndpoint.append("search", search);
+  if (department) jobEndpoint.append("department", department);
+
+  const { data: departments, error: departmentsError } = await getData(departmentEndPoints.departments);
+  const { data: jobs, error: jobsError } = await getData(
+    `${endpoint}?${jobEndpoint.toString()}`
+  );
+
+  if (jobsError || departmentsError) {
+    return <CustomErrorPage title="Oops!" description="Something wrong happened!" />;
+  }
 
   return (
-    <>
-      <Suspense fallback={<CustomSpinnerLoading />}>
-        <JobList jobs={jobs} />
-      </Suspense>
-    </>
+    <Suspense fallback={<div>Loading...</div>}>
+      <JobList jobs={jobs} departments={departments} />
+    </Suspense>
   );
 };
 

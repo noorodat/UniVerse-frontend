@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import EditJob from "@/app/(UniVerse)/(company)/components/company-dashboard/edit-job";
-import { getData } from "@/utils/getData";
+import { getData } from "@/utils/get-data/getData";
 import CustomErrorPage from "@/components/custom/errors/CustomErrorPage";
 import departmentEndPoints from "@/constants/endpoints/department/departmentEndPoints";
 import jobEndPoints from "@/constants/endpoints/job/jobEndPoints";

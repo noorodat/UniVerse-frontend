@@ -10,4 +10,7 @@ export default z.object({
     github: z.string().nullable(),
     department_id: z.string().nullable(),
     university_id: z.string().nullable(),
+    // skills: z
+    // .array(z.string())
+    // .min(1, "At least one tag is required"),
 });

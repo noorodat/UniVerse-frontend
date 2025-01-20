@@ -10,6 +10,7 @@ import { useUser } from "@/contexts/UserContext";
 import { getCountries } from "@/externalAPIs/RESTCountriesAPI";
 import AsyncSelect from "react-select/async";
 import updateCompanyProfile from "@/server-actions/auth/company/profile/updateCompanyProfile";
+import CustomFormTextArea from "@/components/custom/inputs/CustomFormTextArea";
 
 const FormInfoBox = () => {
     const { userProfile } = useUser();
@@ -146,6 +147,17 @@ const FormInfoBox = () => {
                             type="text"
                         />
                     </div>
+
+                    <div className="form-group col-lg-12 col-md-12">
+                        <CustomFormTextArea
+                            label="About company"
+                            name="about"
+                            register={register}
+                            errors={errors.about}
+                            type="text"
+                        />
+                    </div>
+
                 </div>
 
                 <div className="form-group">

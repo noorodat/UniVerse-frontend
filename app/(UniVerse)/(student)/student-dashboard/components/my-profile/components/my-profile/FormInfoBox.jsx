@@ -8,23 +8,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { useUser } from "@/contexts/UserContext";
 import updateStudentProfile from "@/server-actions/auth/student/profile/updateStudentProfile";
-import { Controller } from "react-hook-form";
-import Select from "react-select";
-import { getSkills } from "@/externalAPIs/APILayerSkills";
 import { useState } from "react";
-import AsyncSelect from 'react-select/async';
 import CustomFormSelect from "@/components/custom/select/CustomFormSelect";
+import CustomMultiSelectWithAddition from "@/components/custom/select/CustomMultiSelectWithAddition";
 
 const FormInfoBox = ({ universities, departments }) => {
-  console.log(universities)
-  const [skillsLoading, setSkillsLoading] = useState(false);
+
   const { userProfile } = useUser();
-  const [skills, setSkills] = useState(userProfile.skills);
+
+  const skillOptions = userProfile.skills.map((skill) => ({ value: skill, label: skill }));
+
+  const [skills, setSkills] = useState(skillOptions || []);
+  const [newSkill, setNewSkill] = useState("");
+  const [selectedSkills, setSeletedSkills] = useState(skillOptions);
+
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    control,
+    formState: { errors, isSubmitting }, setValue
   } = useForm({
     resolver: zodResolver(studentProfileValidations),
     defaultValues: {
@@ -37,39 +39,16 @@ const FormInfoBox = ({ universities, departments }) => {
       github: userProfile.github,
       linkedin: userProfile.linkedin,
       portfolio: userProfile.portfolio,
-      skills: userProfile.skills?.map((skill) => ({ label: skill, value: skill })) || [],
+      skills: selectedSkills.map((skill) => skill.value) || [],
     },
   });
 
-  const handleSkillsSelection = async (inputValue) => {
-    if (!inputValue) return;
-    try {
-      setSkillsLoading(true);
-      const fetchedSkills = await getSkills(inputValue);
-      const transformedSkills = fetchedSkills?.map((skill) => ({
-        value: skill,
-        label: skill,
-      }));
-      setSkills(transformedSkills);
-    } catch (error) {
-      toast.error("Failed to fetch skills.");
-    } finally {
-      setSkillsLoading(false);
-    }
-  };
-
 
   const onSubmit = async (data) => {
-    console.log({
-      ...data,
-      skills: skills,
-      university: parseInt(data.university),
-      department: parseInt(data.department),
-    })
     try {
       const payload = {
         ...data,
-        skills: skills,
+        skills: selectedSkills.map((skill) => skill.value),
         university: parseInt(data.university),
         department: parseInt(data.department)
       };
@@ -159,31 +138,19 @@ const FormInfoBox = ({ universities, departments }) => {
             />
           </div>
 
-          <div className="form-group col-lg-6 col-md-12">
+          <div className="form-group col-lg-12 col-md-12">
             <label>Skills</label>
-            <Controller
-              name="skills"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  isMulti
-                  options={skills.map((skill) => ({ label: skill.value, value: skill.value }))}
-                  className="basic-multi-select"
-                  classNamePrefix="select"
-                  isLoading={skillsLoading}
-                  onInputChange={(inputValue) => {
-                    handleSkillsSelection(inputValue);
-                  }}
-                  onChange={(selectedOptions) => {
-                    // Update the field value in react-hook-form
-                    field.onChange(selectedOptions);
-                    setSkills(selectedOptions.map((skill) => skill.value))
-                    console.log(selectedOptions.map((skill) => skill.value));
-                  }}
-                  value={field.value}
-                />
-              )}
+            <CustomMultiSelectWithAddition
+              selectName="skills"
+              elements={skills}
+              setElements={setSkills}
+              newElement={newSkill}
+              setNewElement={setNewSkill}
+              selectedElements={selectedSkills}
+              setSeletedElements={setSeletedSkills}
+              btnTheme="three"
+              register={register}
+              setValue={setValue}
             />
           </div>
 

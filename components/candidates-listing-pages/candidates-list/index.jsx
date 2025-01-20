@@ -6,7 +6,8 @@ import MobileMenu from "../../header/MobileMenu";
 import FilterTopBox from "./FilterTopBox";
 import FilterSidebar from "./FilterSidebar";
 
-const Index = () => {
+const Index = ({ students, departments }) => {
+
   return (
     <>
       {/* <!-- Header Span --> */}
@@ -21,7 +22,7 @@ const Index = () => {
       <MobileMenu />
       {/* End MobileMenu */}
 
-      <Breadcrumb title="Candidates" meta="Candidates" />
+      <Breadcrumb title="Students" meta="Students" />
       {/* <!--End Breadcrumb Start--> */}
 
       <section className="ls-section">
@@ -34,19 +35,19 @@ const Index = () => {
               aria-labelledby="offcanvasLabel"
             >
               <div className="filters-column hide-left">
-                <FilterSidebar />
+                <FilterSidebar departments={departments} />
               </div>
             </div>
             {/* End filter column for tablet and mobile devices */}
 
             <div className="filters-column hidden-1023 col-lg-4 col-md-12 col-sm-12">
-              <FilterSidebar />
+              <FilterSidebar departments={departments} />
             </div>
             {/* <!-- End Filters Column for destop and laptop --> */}
 
             <div className="content-column col-lg-8 col-md-12 col-sm-12">
               <div className="ls-outer">
-                <FilterTopBox />
+                <FilterTopBox students={students} />
                 {/* <!-- ls Switcher --> */}
               </div>
             </div>

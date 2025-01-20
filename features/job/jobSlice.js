@@ -193,6 +193,17 @@ export const jobSlice = createSlice({
     },
 });
 
+export const filterSlice = createSlice({
+    name: "filter",
+    initialState,
+    reducers: {
+        addCategory: (state, { payload }) => {
+            state.jobList.category = payload;
+        },
+        // other reducers...
+    },
+});
+
 export const {
     addLatestJob,
     clearJobTypeToggle,
